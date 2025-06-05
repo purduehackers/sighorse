@@ -7,8 +7,8 @@
   <!-- Loading p5.js library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   
-  <!-- Libre Caslon Font -->
   <style>
+    /* ===== FONTS ===== */
     @font-face {
       font-family: 'Libre Caslon';
       src: url('libre-caslon-condensed/fonts/webfonts/LibreCaslonCondensed-Regular.woff2') format('woff2');
@@ -33,6 +33,7 @@
       font-display: swap;
     }
 
+    /* ===== RESET & BASE STYLES ===== */
     * {
       margin: 0;
       padding: 0;
@@ -46,17 +47,34 @@
       position: relative;
     }
 
-    /* Apply rotation to all text elements */
-    h1, h2, h3, h4, h5, h6, p, li, div:not(.page-container):not(.main-content):not(.content-grid), span:not(.letter), .time-number, .time-label, .counter-title, .caption {
+    /* ===== GLOBAL EFFECTS ===== */
+    /* Slight rotation applied to most text elements for playful effect */
+    h1, h2, h3, h4, h5, h6, p, li, 
+    div:not(.page-container):not(.main-content):not(.content-grid), 
+    span:not(.letter), 
+    .time-number, .time-label, .counter-title, .caption {
       transform: rotate(0.4deg);
     }
 
-    /* Remove rotation from serious section */
+    /* Serious section maintains straight alignment */
     .serious-section,
     .serious-section * {
       transform: rotate(0deg) !important;
     }
 
+    div.serious-section {
+      border: 4px solid black;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes letterFloat {
+      0%, 100% { transform: translateY(var(--base-y, 0)); }
+      50% { transform: translateY(calc(var(--base-y, 0px) + 10px)); }
+    }
+
+    /* ===== HERO SECTION ===== */
     .intro-section {
       position: relative;
       min-height: 400px;
@@ -102,20 +120,26 @@
       animation: letterFloat 3s ease-in-out infinite;
     }
 
-    /* Individual letter positioning and animation delays for normal motion */
+    .year {
+      font-size: clamp(2rem, 6vw, 6rem);
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    /* Letter animation with staggered delays for floating effect */
     @media (prefers-reduced-motion: no-preference) {
       .title .letter:nth-child(1) { animation-delay: 0s; transform: translateY(-5px); }
-      .title .letter:nth-child(2) { animation-delay: 0.7ss; transform: translateY(3px); }
+      .title .letter:nth-child(2) { animation-delay: 0.7s; transform: translateY(3px); }
       .title .letter:nth-child(3) { animation-delay: 0.4s; transform: translateY(-2px); }
       .title .letter:nth-child(4) { animation-delay: 0.2s; transform: translateY(7px); }
       .title .letter:nth-child(5) { animation-delay: 0.2s; transform: translateY(-3px); }
       .title .letter:nth-child(6) { animation-delay: 0.8s; transform: translateY(4px); }
       .title .letter:nth-child(7) { animation-delay: 0.6s; transform: translateY(-6px); }
-      .title .letter:nth-child(8) { animation-delay: 0.1; transform: translateY(2px); }
+      .title .letter:nth-child(8) { animation-delay: 0.1s; transform: translateY(2px); }
       .title .letter:nth-child(9) { animation-delay: 0.3s; transform: translateY(-4px); }
     }
 
-    /* Respect reduced motion preference for letter animations */
+    /* Respect accessibility preferences */
     @media (prefers-reduced-motion: reduce) {
       .title .letter {
         animation: none;
@@ -123,18 +147,7 @@
       }
     }
 
-    @keyframes letterFloat {
-      0%, 100% { transform: translateY(var(--base-y, 0)); }
-      50% { transform: translateY(calc(var(--base-y, 0px) + 10px)); }
-    }
-
-    .year {
-      font-size: clamp(2rem, 6vw, 6rem);
-      font-weight: 600;
-      opacity: 0.9;
-    }
-
-    /* Main content sections */
+    /* ===== LAYOUT ===== */
     .main-content {
       background-color: #fefcf7;
       position: relative;
@@ -150,18 +163,19 @@
       margin: 0 auto;
     }
 
-    /* Mobile ordering - all sections are direct children of content-grid */
+    /* Mobile-first: sections stack vertically in specified order */
     .intro-section { order: 1; }
     .what-section { order: 2; }
     .faq-section { order: 3; }
     .serious-section { order: 4; }
     .submission-section { order: 5; }
 
-    /* Hide columns on mobile - sections are direct children of content-grid. Necessary to make above order shenanigans work. */
+    /* Columns are hidden on mobile via display: contents */
     .column {
       display: contents;
     }
 
+    /* Desktop layout: two-column layout with flex positioning */
     @media (min-width: 768px) {
       .content-grid {
         display: flex;
@@ -176,7 +190,7 @@
         flex-direction: column;
       }
 
-      /* Reset order for desktop - flex layout will handle positioning */
+      /* Reset mobile ordering for desktop */
       .intro-section,
       .what-section,
       .faq-section,
@@ -186,6 +200,7 @@
       }
     }
 
+    /* ===== CONTENT SECTIONS ===== */
     .section {
       background: white;
       padding: 3rem;
@@ -196,17 +211,14 @@
       border: 2px solid transparent;
       background-clip: padding-box;
       position: relative;
+      font-size: 1.3rem;
     }
 
     .section h2 {
-      font-family: 'Libre Caslon', serif;
       font-size: 3rem;
       margin-bottom: 2rem;
       color: #2c2c2c;
       font-weight: bold;
-    }
-    .section {
-      font-size: 1.3rem;
     }
 
     .section p {
@@ -227,6 +239,7 @@
       position: relative;
     }
 
+    /* Custom horse emoji bullet points */
     .section li::before {
       content: "🐴";
       position: absolute;
@@ -234,6 +247,7 @@
       top: 0;
     }
 
+    /* ===== IMAGES & MEDIA ===== */
     .svg-container {
       text-align: center;
       margin: 2rem 0;
@@ -241,11 +255,7 @@
 
     .svg-container img {
       max-width: 100%;
-      width: 120%;
       height: auto;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin: 0 -10%;
     }
 
     .caption {
@@ -254,7 +264,7 @@
       margin-top: 1rem;
     }
 
-    /* Counter Section */
+    /* ===== COUNTDOWN SECTION ===== */
     .counter-section {
       background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
       color: white;
@@ -263,7 +273,6 @@
     }
 
     .counter-title {
-      font-family: 'Libre Caslon', serif;
       font-size: 2.5rem;
       margin-bottom: 2rem;
       font-weight: 600;
@@ -287,7 +296,6 @@
       font-size: 3rem;
       font-weight: bold;
       display: block;
-      font-family: 'Libre Caslon', serif;
     }
 
     .time-label {
@@ -297,7 +305,7 @@
       letter-spacing: 1px;
     }
 
-    /* Submission Box Styles */
+    /* ===== SUBMISSION COMPONENTS ===== */
     .submission-box {
       background: white;
       border-radius: 12px;
@@ -305,10 +313,61 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       border: 1px solid #e6d7c3;
       margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      /* Try implementing shape-outside for proper text shaping*/
+      float: left;
+      width: 100%;
+      clear: both;
+    }
+
+    /* Dithered background for NAND submission */
+    .submission-box[href*="NAND"]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, #d3caba 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, #d3caba 1px, transparent 1px),
+        radial-gradient(circle at 25% 75%, #d3caba 0.5px, transparent 0.5px),
+        radial-gradient(circle at 75% 25%, #d3caba 0.5px, transparent 0.5px),
+        white;
+      background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
+      background-position: 0 0, 4px 4px, 0 0, 2px 2px;
+      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 15% 98%, 30% 90%, 55% 70%, 75% 35%, 90% 8%);
+      z-index: 0;
+    }
+
+    /* Dithered background for Keymashed submission */
+    .submission-box[href*="keymashed"]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, #d32d34 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, #d32d34 1px, transparent 1px),
+        radial-gradient(circle at 25% 75%, #d32d34 0.5px, transparent 0.5px),
+        radial-gradient(circle at 75% 25%, #d32d34 0.5px, transparent 0.5px),
+        white;
+      background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
+      background-position: 0 0, 4px 4px, 0 0, 2px 2px;
+      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 15% 98%, 30% 90%, 55% 70%, 75% 35%, 90% 8%);
+      z-index: 0;
+    }
+
+    /* Ensure content appears above the dithered background */
+    .submission-content {
+      position: relative;
+      z-index: 1;
     }
 
     .submission-title {
-      font-family: 'Libre Caslon', serif;
       font-size: 1.8rem;
       font-weight: 600;
       color: #2c2c2c;
@@ -329,7 +388,7 @@
       color: #999;
     }
 
-    /* Clickable Submission Box Styles */
+    /* Interactive submission links */
     .clickable-submission {
       display: block;
       text-decoration: none;
@@ -348,32 +407,26 @@
       transform: translateY(0);
     }
 
-    /* Submission Content Layout */
+    /* Submission content layout */
     .submission-content {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
     }
 
     .submission-text {
       flex: 1;
-      min-width: 0; /* Allows text to shrink properly */
+      min-width: 0;
+      max-width: 70%;
     }
 
     .submission-logo {
       flex-shrink: 0;
+      align-self: flex-start;
     }
 
-    .submission-logo-img {
-      max-height: 80px;
-      height: auto;
-      width: auto;
-      max-width: 150px;
-      object-fit: contain;
-      border-radius: 4px;
-    }
-
-    /* On larger screens, display content side by side */
+    /* Responsive submission layout */
     @media (min-width: 600px) {
       .submission-content {
         flex-direction: row;
@@ -386,12 +439,11 @@
       }
 
       .submission-logo-img {
-        max-height: 100px;
         max-width: 120px;
       }
     }
 
-    /* Footer Styles */
+    /* ===== FOOTER ===== */
     .footer {
       transform: rotate(0deg);
       background-color: #2c2c2c;
@@ -409,6 +461,71 @@
 
     .footer a:hover {
       text-decoration: underline;
+    }
+    
+    /* ===== DISCORD BUTTON ===== */
+    .discord-button-container {
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+    
+    .discord-button {
+      display: inline-flex;
+      background: #5865F2;
+      color: white;
+      font-size: 2.3rem;
+      font-weight: 600;
+      padding: 2.5rem 3rem;
+      border-radius: 8px;
+      transition: all 1s ease;
+      border: 2px solid rgba(255,255,255,0.2);
+      overflow: hidden;
+    }
+    
+    .discord-button:hover .discord-text {
+      display: inline-block;
+      animation: rotateText 1s infinite;
+    }
+    
+    @keyframes rotateText {
+      0% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(15deg);
+      }
+      75% {
+        transform: rotate(-15deg);
+      }
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+    
+    .discord-button:active {
+      transform: translateY(0) rotate(-0.5deg);
+      box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+    }
+    
+    .discord-icon {
+      height: 2.3rem; /* Synchronize with font size of Discord button */
+      margin-right: 10px;
+    }
+    
+    .discord-text {
+      display: inline-block;
+    }
+    
+    @media (max-width: 480px) {
+      .discord-button {
+        font-size: 1.1rem;
+        padding: 0.7rem 1.4rem;
+      }
+      
+      .discord-icon {
+        width: 20px;
+        height: 20px;
+      }
     }
   </style>
 </head>
@@ -440,17 +557,17 @@
         A: As long or short as you want! A sentence about what you learned, a photo of your progress, or a git commit.</p>
         
         <p><strong>Q: What makes a good artifact?</strong><br>
-        A: Something that captures and shares your adventure in a way that others can access and appreciate. Think websites, videos, papers, documentation, art pieces, or even creative formats like interactive demos or zines.</p>
+        A: Something that captures and shares your adventure in a way that others can access and appreciate. Think websites, videos, papers, documentation, art pieces, interactive demos or zines.</p>
 
         <p><strong>Q: How many adventures am I allowed to have?</strong><br>
-        A: As many as you want.</p>
+        A: <s>No more than three &mdash; don't be greedy.</s> As many as you want.</p>
 
         <p><strong>Q: Am I allowed to present a past adventure?</strong><br>
-        A: Yes, but we ask that the artifact be created for SIGHORSE.
+        A: Yes.
         </p>
 
         <p><strong>Q: Do my adventure and artifact have to be distinct entities?</strong><br>
-        A: No; writing a joke research paper is simultaneously adventuring while creating an artifact.</p>
+        A: No; for example, writing a joke research paper is simultaneously adventuring while creating an artifact.</p>
         </div>
         
         <!-- Section 4: SIGHORSE invites serious submissions -->
@@ -481,7 +598,7 @@
 
         <!-- Section 5: Example SIGHORSE Submission -->
         <div class="section submission-section">
-        <h2>Example SIGHORSE Submissions</h2>
+        <h2>Things that would've been SIGHORSE submissions had it existed before (Examples)</h2>
         <!-- <div class="submission-box">
           <h3 class="submission-title">Research Paper: Any cat is composed of at most 700 horses with 95% accuracy</h3>
           <p class="submission-author">Kartavya Vashishtha</p>
@@ -494,6 +611,17 @@
             </div>
             <div class="submission-logo">
               <img src="NAND-logo.png" alt="NAND Logo" class="submission-logo-img">
+            </div>
+          </div>
+        </a>
+        <a href="https://github.com/kartva/keymashed" target="_blank" rel="noopener noreferrer" class="submission-box clickable-submission">
+          <div class="submission-content">
+            <div class="submission-text">
+              <h3 class="submission-title">Keymashed: Mash! your keyboard to make your internet better</h3>
+              <p class="submission-author">Kartavya Vashishtha</p>
+            </div>
+            <div class="submission-logo">
+              <img src="keymashed-logo.jpg" alt="Keymashed Logo" class="submission-logo-img">
             </div>
           </div>
         </a>
@@ -522,7 +650,15 @@
         <span class="time-label">Seconds</span>
         </div>
       </div>
-      <p style="margin-top: 1rem; font-size: 1.3em">(Unofficially, you should have started sharing your progress the moment you finished reading this sentence.)</p>
+      <p style="margin-top: 1rem; font-size: 2.2rem">(Unofficially, you should have started sharing your progress the moment you finished reading this sentence.)</p>
+      
+      <!-- Discord Button -->
+      <div class="discord-button-container">
+        <a href="https://discord.gg/your-invite-link" target="_blank" rel="noopener noreferrer" class="discord-button">
+          <svg class="discord-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" fill="#fff"/></svg>
+          <span class="discord-text">Join our Discord to start!</span>
+        </a>
+      </div>
       </div>
     </div>
 
