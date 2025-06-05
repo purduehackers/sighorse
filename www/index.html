@@ -203,7 +203,7 @@
     /* ===== CONTENT SECTIONS ===== */
     .section {
       background: white;
-      padding: 3rem;
+      padding: 2rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
       border-radius: 8px;
@@ -212,6 +212,22 @@
       background-clip: padding-box;
       position: relative;
       font-size: 1.4rem;
+    }
+    
+    /* Responsive font size for sections */
+    @media (max-width: 430px) {
+      .section {
+        font-size: 1.2rem;
+        padding: 1.5rem;
+      }
+      
+      .section h2 {
+        font-size: 2rem !important;
+      }
+      
+      .section h3 {
+        font-size: 1.7rem !important;
+      }
     }
 
     .section h2 {
@@ -322,10 +338,7 @@
       margin-top: 1.5rem;
       position: relative;
       overflow: hidden;
-      /* Try implementing shape-outside for proper text shaping*/
-      float: left;
       width: 100%;
-      clear: both;
     }
 
     /* Dithered background for NAND submission */
@@ -370,8 +383,16 @@
 
     /* Ensure content appears above the dithered background */
     .submission-content {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
       position: relative;
       z-index: 1;
+      text-shadow:
+        0px 0px 12px white,
+        0px 0px 5px white,
+        0px 0px 2px white;
     }
 
     .submission-title {
@@ -414,41 +435,38 @@
       transform: translateY(0);
     }
 
-    /* Submission content layout */
-    .submission-content {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
-
     .submission-text {
       flex: 1;
       min-width: 0;
-      max-width: 70%;
+      padding-right: 0.5rem;
     }
 
     .submission-logo {
       flex-shrink: 0;
-      align-self: flex-start;
+      align-self: center;
     }
 
     /* Responsive submission layout */
-    @media (min-width: 600px) {
+    @media (max-width: 580px) {
       .submission-content {
-        flex-direction: row;
-        align-items: center;
-        gap: 2rem;
+        flex-direction: column;
       }
 
       .submission-text {
-        text-align: left;
+        padding-right: 0;
+        width: 100%;
+      }
+      
+      .submission-logo {
+        align-self: flex-start;
+        margin-top: 0.5rem;
       }
     }
 
     .submission-logo-img {
-      max-width: 120px;
-      max-height: 120px;
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
     }
 
     /* ===== FOOTER ===== */
@@ -526,13 +544,11 @@
     
     @media (max-width: 480px) {
       .discord-button {
-        font-size: 1.1rem;
-        padding: 0.7rem 1.4rem;
+        font-size: 2rem;
       }
       
       .discord-icon {
-        width: 20px;
-        height: 20px;
+        height: 2rem;
       }
     }
   </style>
@@ -581,8 +597,8 @@
         <!-- Section 4: SIGHORSE invites serious submissions -->
         <div class="section serious-section">
         <h2>SIGHORSE invites serious submissions</h2>
-        <p>While this website may be playful, <b>serious work - serious presentation submissions are welcome</b> at SIGHORSE.
-          We can give you a link to a more serious website to share your work with others.</p>
+        <p>While this website is quite playful, <b>serious work - serious presentation submissions <i>are</i> welcome</b> at SIGHORSE.
+          We want you to have fun, grow, and present your best work.</p>
         </div>
       </div>
       
@@ -596,13 +612,13 @@
         <h3>The six easy steps to SIGHORSE</h3>
         <ul>
           <li>Join the <a href="https://puhack.horse/discord" target="_blank" rel="noopener noreferrer">Purdue Hacker's Discord</a>.</li>
-          <li>Create a personal thread in <pre>#SIGHORSE🦓</pre></li>
+          <li>Create a personal thread in <code>#SIGHORSE&NoBreak;🦓</code>.</li>
           <li>Make incremental progress on your adventure every day and share it in your personal thread!</li>
           <li>Get a badge if you shared an update for at least ten days, and a second secret badge for sharing an update every day.</li>
           <li>Near the end, <b>create and share a publicly-accessible artifact</b> for inclusion in SIGHORSE! An artifact is anything archivable (something that can be saved, backed up, etc.).</li>
           <li>Incessantly cite your SIGHORSE artifact for the rest of your life (natural or otherwise).</li>
         </ul>
-        
+
         <div class="svg-container">
           <img src="sighorse-vs-all-other-conferences.svg" alt="SIGHORSE vs All Other Conferences Comparison Chart">
           <div class="caption">Fig. 1</div>
