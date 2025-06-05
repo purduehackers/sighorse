@@ -47,8 +47,8 @@
     }
 
     /* Apply rotation to all text elements */
-    h1, h2, h3, h4, h5, h6, p, li, div, span:not(.letter), .time-number, .time-label, .counter-title, .caption {
-      transform: rotate(0.2deg);
+    h1, h2, h3, h4, h5, h6, p, li, div:not(.page-container):not(.main-content):not(.content-grid), span:not(.letter), .time-number, .time-label, .counter-title, .caption {
+      transform: rotate(0.4deg);
     }
 
     /* Remove rotation from serious section */
@@ -370,7 +370,7 @@
 
     /* Footer Styles */
     .footer {
-      transform: rotate(-0.4deg);
+      transform: rotate(0deg);
       background-color: #2c2c2c;
       color: #ccc;
       padding: 2rem;
