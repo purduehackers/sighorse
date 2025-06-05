@@ -150,8 +150,21 @@
       margin: 0 auto;
     }
 
+    /* Mobile ordering - all sections are direct children of content-grid */
+    .intro-section { order: 1; }
+    .what-section { order: 2; }
+    .faq-section { order: 3; }
+    .serious-section { order: 4; }
+    .submission-section { order: 5; }
+
+    /* Hide columns on mobile - sections are direct children of content-grid. Necessary to make above order shenanigans work. */
+    .column {
+      display: contents;
+    }
+
     @media (min-width: 768px) {
       .content-grid {
+        display: flex;
         flex-direction: row;
         align-items: flex-start;
         gap: 1rem;
@@ -161,6 +174,15 @@
         flex: 1;
         display: flex;
         flex-direction: column;
+      }
+
+      /* Reset order for desktop - flex layout will handle positioning */
+      .intro-section,
+      .what-section,
+      .faq-section,
+      .serious-section,
+      .submission-section {
+        order: initial;
       }
     }
 
