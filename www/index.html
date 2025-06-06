@@ -653,6 +653,34 @@
       justify-content: center;
       margin-top: auto;
       order: 6; /* Ensure it appears after the What section */
+      position: relative;
+      overflow: hidden;
+      min-height: 120px;
+    }
+    
+    /* Create a repeating background pattern instead of explicit elements */
+    .creatures-gallery::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        url('creatura_1_transparent.png'),
+        url('creatura_2_transparent.png'),
+        url('creatura_3_transparent.png');
+      background-size: 
+        80px auto,
+        100px auto,
+        90px auto;
+      background-position:
+        10% 20%,  /* Moved from 20% to 10% */
+        50% 60%,  /* Kept at center */
+        90% 30%;  /* Moved from 80% to 90% */
+      background-repeat: repeat-y;
+      opacity: 0.85;
+      z-index: 1;
     }
     
     /* Create a flex container that will adjust to available height */
@@ -662,7 +690,8 @@
       }
       
       .creatures-gallery {
-        flex: 1 1 auto;
+        flex: 1 1 0px; /* Changed to allow complete shrinking to zero */
+        min-height: 120px; /* Minimum height for visual appeal */
       }
       
       /* Ensure second column fills available space */
@@ -673,41 +702,23 @@
       }
     }
     
-    .creatures-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      height: 100%; /* Use all available height */
+    /* Hide the gallery when it's too small */
+    .hide-gallery {
+      display: none !important;
     }
     
-    .creature {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .creature-img {
-      max-width: 100%;
-      height: auto;
-      max-height: 120px;
-      transition: transform 0.3s ease;
-    }
-    
-    .creature-img:hover {
-      transform: scale(1.1) rotate(5deg);
-    }
-    
-    /* In mobile view, set a specific height */
+    /* In mobile view */
     @media (max-width: 768px) {
       .creatures-gallery {
-        min-height: 180px;
-        flex: 0 0 auto;
+        flex: 1 1 0px; /* Allow complete shrinking */
+        min-height: 120px;
       }
       
-      .creature-img {
-        max-height: 100px;
+      .creatures-gallery::before {
+        background-size: 
+          70px auto,
+          80px auto,
+          75px auto;
       }
     }
   </style>
@@ -784,19 +795,9 @@
         </div>
         </div>
 
-        <!-- Creatures Gallery Section -->
-        <div class="section creatures-gallery">
-          <div class="creatures-container">
-            <div class="creature">
-              <img src="creatura_1_transparent.png" alt="Creatura 1" class="creature-img">
-            </div>
-            <div class="creature">
-              <img src="creatura_2_transparent.png" alt="Creatura 2" class="creature-img">
-            </div>
-            <div class="creature">
-              <img src="creatura_3_transparent.png" alt="Creatura 3" class="creature-img">
-            </div>
-          </div>
+        <!-- Section 6. Creatures Gallery -->
+        <div class="section creatures-gallery" id="creatures-gallery">
+          <!-- No explicit content needed - using ::before pseudoelement -->
         </div>
       </div>
       </div>
@@ -1141,6 +1142,30 @@
         document.getElementById('hours').textContent = '0';
         document.getElementById('minutes').textContent = '0';
         document.getElementById('seconds').textContent = '0';
+      }
+    }
+    
+    // Check gallery height after window loads and on resize
+    window.addEventListener('load', checkGalleryHeight);
+    window.addEventListener('resize', checkGalleryHeight);
+    
+    // Function to check if gallery has enough height and hide if not
+    function checkGalleryHeight() {
+      const gallery = document.getElementById('creatures-gallery');
+      if (gallery) {
+        // First ensure the gallery is visible to get a proper height measurement
+        gallery.classList.remove('hide-gallery');
+        
+        // Force a reflow to ensure we get the correct height after removing hide-gallery
+        void gallery.offsetHeight;
+        
+        // Now get the actual height assigned by the layout engine
+        const galleryHeight = gallery.clientHeight;
+
+        // If less than 120px, hide the gallery
+        if (galleryHeight < 120) {
+          gallery.classList.add('hide-gallery');
+        }
       }
     }
   </script>
