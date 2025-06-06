@@ -8,29 +8,35 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   
   <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --main-bg-color: #f5f1e8;
+      --section-bg-color: rgba(255, 255, 255, 0.95);
+      --border-color: #e6d7c3;
+      --text-color: #2c2c2c;
+      --box-shadow: 0 4px 8px rgba(0,0,0,0.08), 0 0 0 2px #e6d7c3;
+      --border-radius: 8px;
+      --section-padding: 2rem;
+      --section-margin: 1rem;
+    }
+    
     /* ===== FONTS ===== */
     @font-face {
       font-family: 'Libre Caslon';
       src: url('libre-caslon-condensed/fonts/webfonts/LibreCaslonCondensed-Regular.woff2') format('woff2');
       font-weight: normal;
-      font-style: normal;
-      font-display: swap;
     }
     
     @font-face {
       font-family: 'Libre Caslon';
       src: url('libre-caslon-condensed/fonts/webfonts/LibreCaslonCondensed-Bold.woff2') format('woff2');
       font-weight: bold;
-      font-style: normal;
-      font-display: swap;
     }
     
     @font-face {
       font-family: 'Libre Caslon';
       src: url('libre-caslon-condensed/fonts/webfonts/LibreCaslonCondensed-SemiBold.woff2') format('woff2');
       font-weight: 600;
-      font-style: normal;
-      font-display: swap;
     }
 
     /* ===== RESET & BASE STYLES ===== */
@@ -48,7 +54,7 @@
 
     body {
       font-family: 'Libre Caslon', serif;
-      background-color: #f5f1e8;
+      background-color: var(--main-bg-color);
       position: relative;
     }
     
@@ -77,15 +83,9 @@
     }
     
     @keyframes floating-creatures {
-      0% {
-        background-position: 0 0;
-      }
-      50% {
-        background-position: 250px 250px;
-      }
-      100% {
-        background-position: 500px 500px;
-      }
+      0% { background-position: 0 0; }
+      50% { background-position: 250px 250px; }
+      100% { background-position: 500px 500px; }
     }
 
     /* ===== GLOBAL EFFECTS ===== */
@@ -124,8 +124,8 @@
       align-items: center;
       justify-content: center;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08), 0 0 0 2px #e6d7c3;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
       border: 2px solid transparent;
       background-clip: padding-box;
     }
@@ -137,7 +137,7 @@
       right: 0;
       bottom: 0;
       z-index: 1;
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       overflow: hidden;
     }
 
@@ -167,17 +167,29 @@
       opacity: 0.9;
     }
 
-    /* Letter animation with staggered delays for floating effect */
+    /* Letter animation with systematic approach */
     @media (prefers-reduced-motion: no-preference) {
-      .title .letter:nth-child(1) { animation-delay: 0s; transform: translateY(-5px); }
-      .title .letter:nth-child(2) { animation-delay: 0.7s; transform: translateY(3px); }
-      .title .letter:nth-child(3) { animation-delay: 0.4s; transform: translateY(-2px); }
-      .title .letter:nth-child(4) { animation-delay: 0.2s; transform: translateY(7px); }
-      .title .letter:nth-child(5) { animation-delay: 0.2s; transform: translateY(-3px); }
-      .title .letter:nth-child(6) { animation-delay: 0.8s; transform: translateY(4px); }
-      .title .letter:nth-child(7) { animation-delay: 0.6s; transform: translateY(-6px); }
-      .title .letter:nth-child(8) { animation-delay: 0.1s; transform: translateY(2px); }
-      .title .letter:nth-child(9) { animation-delay: 0.3s; transform: translateY(-4px); }
+      .title .letter {
+        --base-y: 0px;
+      }
+      .title .letter:nth-child(odd) { 
+        --base-y: -4px;
+        animation-delay: calc(var(--n, 1) * 0.15s); 
+      }
+      .title .letter:nth-child(even) { 
+        --base-y: 4px;
+        animation-delay: calc(var(--n, 1) * 0.2s); 
+      }
+      /* Set individual n values */
+      .title .letter:nth-child(1) { --n: 0; }
+      .title .letter:nth-child(2) { --n: 3.5; }
+      .title .letter:nth-child(3) { --n: 2; }
+      .title .letter:nth-child(4) { --n: 1; }
+      .title .letter:nth-child(5) { --n: 1; }
+      .title .letter:nth-child(6) { --n: 4; }
+      .title .letter:nth-child(7) { --n: 3; }
+      .title .letter:nth-child(8) { --n: 0.5; }
+      .title .letter:nth-child(9) { --n: 1.5; }
     }
 
     /* Respect accessibility preferences */
@@ -221,49 +233,14 @@
       display: contents;
     }
 
-    /* Desktop layout: two-column layout with flex positioning */
-    @media (min-width: 960px) {
-      .content-grid {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch; /* Changed from flex-start to stretch */
-        gap: 1rem;
-      }
-      
-      .column {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        min-height: 100%; /* Ensure columns take full height */
-      }
-      
-      /* Ensure columns are the same height */
-      .column:first-child,
-      .column:last-child {
-        display: flex;
-        flex-direction: column;
-      }
-      
-      /* Make the FAQ and What sections take up their natural height */
-      .faq-section,
-      .what-section {
-        flex: 0 0 auto;
-      }
-      
-      /* Make creatures gallery fill available space */
-      .creatures-gallery {
-        margin-bottom: auto;
-      }
-    }
-
     /* ===== CONTENT SECTIONS ===== */
     .section {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 2rem;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08), 0 0 0 2px #e6d7c3;
+      background: var(--section-bg-color);
+      padding: var(--section-padding);
+      margin-top: var(--section-margin);
+      margin-bottom: var(--section-margin);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
       border: 2px solid transparent;
       background-clip: padding-box;
       position: relative;
@@ -271,33 +248,17 @@
       backdrop-filter: blur(2px);
     }
     
-    /* Responsive font size for sections */
-    @media (max-width: 430px) {
-      .section {
-        font-size: 1.2rem;
-        padding: 1.5rem;
-      }
-      
-      .section h2 {
-        font-size: 2rem !important;
-      }
-      
-      .section h3 {
-        font-size: 1.7rem !important;
-      }
-    }
-
     .section h2 {
       font-size: 2.5rem;
       margin-bottom: 2rem;
-      color: #2c2c2c;
+      color: var(--text-color);
       font-weight: bold;
     }
 
     .section h3 {
       font-size: 2.2rem;
       margin-bottom: 1.5rem;
-      color: #2c2c2c;
+      color: var(--text-color);
       font-weight: 600;
     }
 
@@ -368,7 +329,7 @@
     .time-unit {
       background: rgba(255,255,255,0.1);
       padding: 1.5rem;
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       min-width: 120px;
     }
 
@@ -391,15 +352,15 @@
       border-radius: 12px;
       padding: 2rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      border: 1px solid #e6d7c3;
+      border: 1px solid var(--border-color);
       margin-top: 1.5rem;
       position: relative;
       overflow: hidden;
       width: 100%;
     }
 
-    /* Dithered background for NAND submission */
-    .submission-box[href*="NAND"]::before {
+    /* Dithered background pattern using CSS variables */
+    .submission-box::before {
       content: '';
       position: absolute;
       top: 0;
@@ -407,10 +368,10 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 25% 25%, #d3caba 1px, transparent 1px),
-        radial-gradient(circle at 75% 75%, #d3caba 1px, transparent 1px),
-        radial-gradient(circle at 25% 75%, #d3caba 0.5px, transparent 0.5px),
-        radial-gradient(circle at 75% 25%, #d3caba 0.5px, transparent 0.5px),
+        radial-gradient(circle at 25% 25%, var(--dither-color, transparent) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, var(--dither-color, transparent) 1px, transparent 1px),
+        radial-gradient(circle at 25% 75%, var(--dither-color, transparent) 0.5px, transparent 0.5px),
+        radial-gradient(circle at 75% 25%, var(--dither-color, transparent) 0.5px, transparent 0.5px),
         white;
       background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
       background-position: 0 0, 4px 4px, 0 0, 2px 2px;
@@ -418,64 +379,21 @@
       z-index: 0;
     }
 
-    /* Dithered background for Keymashed submission */
-    .submission-box[href*="keymashed"]::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 25% 25%, #d32d34 1px, transparent 1px),
-        radial-gradient(circle at 75% 75%, #d32d34 1px, transparent 1px),
-        radial-gradient(circle at 25% 75%, #d32d34 0.5px, transparent 0.5px),
-        radial-gradient(circle at 75% 25%, #d32d34 0.5px, transparent 0.5px),
-        white;
-      background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
-      background-position: 0 0, 4px 4px, 0 0, 2px 2px;
-      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 15% 98%, 30% 90%, 55% 70%, 75% 35%, 90% 8%);
-      z-index: 0;
+    /* Setting dither colors for different submissions */
+    .submission-box[href*="NAND"] {
+      --dither-color: #d3caba;
     }
 
-    /* Dithered background for Pants submission */
-    .submission-box[id="pants"]::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 25% 25%, #cdb9a1 1px, transparent 1px),
-        radial-gradient(circle at 75% 75%, #cdb9a1 1px, transparent 1px),
-        radial-gradient(circle at 25% 75%, #cdb9a1 0.5px, transparent 0.5px),
-        radial-gradient(circle at 75% 25%, #cdb9a1 0.5px, transparent 0.5px),
-        white;
-      background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
-      background-position: 0 0, 4px 4px, 0 0, 2px 2px;
-      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 15% 98%, 30% 90%, 55% 70%, 75% 35%, 90% 8%);
-      z-index: 0;
+    .submission-box[href*="keymashed"] {
+      --dither-color: #d32d34;
     }
 
-    /* Dithered background for TI Wordle submission */
-    .submission-box[id="ti-wordle"]::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 25% 25%, rgb(118 169 102) 1px, transparent 1px),
-        radial-gradient(circle at 75% 75%, rgb(118 169 102) 1px, transparent 1px),
-        radial-gradient(circle at 25% 75%, rgb(118 169 102) 0.5px, transparent 0.5px),
-        radial-gradient(circle at 75% 25%, rgb(118 169 102) 0.5px, transparent 0.5px),
-        white;
-      background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
-      background-position: 0 0, 4px 4px, 0 0, 2px 2px;
-      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 15% 98%, 30% 90%, 55% 70%, 75% 35%, 90% 8%);
-      z-index: 0;
+    .submission-box[id="pants"] {
+      --dither-color: #cdb9a1;
+    }
+
+    .submission-box[id="ti-wordle"] {
+      --dither-color: rgb(118 169 102);
     }
 
     /* Ensure content appears above the dithered background */
@@ -495,7 +413,7 @@
     .submission-title {
       font-size: 1.8rem;
       font-weight: 600;
-      color: #2c2c2c;
+      color: var(--text-color);
       margin-bottom: 1rem;
       line-height: 1.3;
     }
@@ -543,23 +461,6 @@
       align-self: center;
     }
 
-    /* Responsive submission layout */
-    @media (max-width: 580px) {
-      .submission-content {
-        flex-direction: column;
-      }
-
-      .submission-text {
-        padding-right: 0;
-        width: 100%;
-      }
-      
-      .submission-logo {
-        align-self: flex-start;
-        margin-top: 0.5rem;
-      }
-    }
-
     .submission-logo-img {
       width: 110px;
       height: 110px;
@@ -578,7 +479,7 @@
     }
 
     .footer a {
-      color: #e6d7c3;
+      color: var(--border-color);
       text-decoration: none;
     }
 
@@ -594,13 +495,13 @@
     
     .discord-button {
       display: inline-flex;
-      align-items: center; /* Ensure vertical alignment */
+      align-items: center;
       background: #5865F2;
       color: white;
       font-size: 2.3rem;
       font-weight: 600;
       padding: 2.5rem 3rem;
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       transition: all 1s ease;
       border: 2px solid rgba(255,255,255,0.2);
       overflow: hidden;
@@ -615,18 +516,10 @@
     }
     
     @keyframes rotateText {
-      0% {
-        transform: rotate(0deg);
-      }
-      25% {
-        transform: rotate(15deg);
-      }
-      75% {
-        transform: rotate(-15deg);
-      }
-      100% {
-        transform: rotate(0deg);
-      }
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(15deg); }
+      75% { transform: rotate(-15deg); }
+      100% { transform: rotate(0deg); }
     }
     
     .discord-button:active {
@@ -635,36 +528,23 @@
     }
     
     .discord-icon {
-      height: 1em; /* Match the current font size exactly */
-      width: auto; /* Maintain aspect ratio */
+      height: 1em;
+      width: auto;
       margin-right: 10px;
-      flex-shrink: 0; /* Prevent icon from shrinking */
+      flex-shrink: 0;
     }
     
     .discord-text {
       display: inline-block;
-      line-height: 1; /* Ensure text height matches font size */
+      line-height: 1;
     }
     
-    @media (max-width: 480px) {
-      .discord-button {
-        font-size: 2rem;
-        padding: 2rem 2.5rem; /* Slightly reduce padding on small screens */
-      }
-    }
-
     /* ===== SUBMISSION GRID LAYOUT ===== */
     .submission-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
       margin-top: 1rem;
-    }
-    
-    @media (min-width: 960px) {
-      .submission-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
     }
     
     /* Full-width section container for submissions */
@@ -698,56 +578,28 @@
     .creatura-image {
       max-width: 100%;
       height: auto;
-      transform: rotate(3deg); /* Add a slight rotation for playfulness */
-      object-fit: contain; /* Ensure image scales properly */
+      transform: rotate(3deg);
+      object-fit: contain;
       transition: transform 0.3s ease;
     }
     
     .creatura-link:hover .creatura-image {
-      transform: rotate(6deg) scale(1.05); /* Increase rotation and size on hover */
-    }
-    
-    /* Show image on larger screens */
-    @media (min-width: 960px) {
-      .why-container {
-        flex-direction: row;
-        align-items: center;
-        gap: 2rem;
-      }
-      
-      .why-image {
-        display: block;
-        flex: 0 0 auto;
-        width: 250px;
-      }
-    }
-    
-    /* Adjust layout on very wide screens */
-    @media (min-width: 1440px) {
-      .why-container {
-        justify-content: space-between;
-        max-width: 1700px;
-      }
-      
-      .why-image {
-        margin: 0 auto;
-      }
+      transform: rotate(6deg) scale(1.05);
     }
     
     /* ===== CREATURES GALLERY ===== */
     .creatures-gallery {
-      flex: 1 1 auto; /* Allow growing and shrinking */
+      flex: 1 1 auto;
       display: flex;
       flex-direction: column;
       justify-content: center;
       margin-top: auto;
-      order: 6; /* Ensure it appears after the What section */
+      order: 6;
       position: relative;
       overflow: hidden;
       min-height: 120px;
     }
     
-    /* Create a repeating background pattern instead of explicit elements */
     .creatures-gallery::before {
       content: '';
       position: absolute;
@@ -764,31 +616,12 @@
         100px auto,
         90px auto;
       background-position:
-        10% 20%,  /* Moved from 20% to 10% */
-        50% 60%,  /* Kept at center */
-        90% 30%;  /* Moved from 80% to 90% */
+        10% 20%,
+        50% 60%,
+        90% 30%;
       background-repeat: repeat-y;
       opacity: 0.85;
       z-index: 1;
-    }
-    
-    /* Create a flex container that will adjust to available height */
-    @media (min-width: 960px) {
-      .what-section {
-        flex: 0 0 auto; /* Don't grow, don't shrink */
-      }
-      
-      .creatures-gallery {
-        flex: 1 1 0px; /* Changed to allow complete shrinking to zero */
-        min-height: 120px; /* Minimum height for visual appeal */
-      }
-      
-      /* Ensure second column fills available space */
-      .column:nth-child(2) {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
     }
     
     /* Hide the gallery when it's too small */
@@ -796,10 +629,48 @@
       display: none !important;
     }
     
-    /* In mobile view */
+    /* ===== MEDIA QUERIES (CONSOLIDATED) ===== */
+    @media (max-width: 480px) {
+      .discord-button {
+        font-size: 2rem;
+        padding: 2rem 2.5rem;
+      }
+    }
+    
+    @media (max-width: 430px) {
+      .section {
+        font-size: 1.2rem;
+        padding: 1.5rem;
+      }
+      
+      .section h2 {
+        font-size: 2rem !important;
+      }
+      
+      .section h3 {
+        font-size: 1.7rem !important;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .submission-content {
+        flex-direction: column;
+      }
+
+      .submission-text {
+        padding-right: 0;
+        width: 100%;
+      }
+      
+      .submission-logo {
+        align-self: flex-start;
+        margin-top: 0.5rem;
+      }
+    }
+
     @media (max-width: 768px) {
       .creatures-gallery {
-        flex: 1 1 0px; /* Allow complete shrinking */
+        flex: 1 1 0px;
         min-height: 120px;
       }
       
@@ -808,6 +679,79 @@
           70px auto,
           80px auto,
           75px auto;
+      }
+    }
+    
+    @media (min-width: 960px) {
+      .content-grid {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        gap: 1rem;
+      }
+      
+      .column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+      }
+      
+      .column:first-child,
+      .column:last-child {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .faq-section,
+      .what-section {
+        flex: 0 0 auto;
+      }
+      
+      .creatures-gallery {
+        margin-bottom: auto;
+      }
+      
+      .submission-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .what-section {
+        flex: 0 0 auto;
+      }
+      
+      .creatures-gallery {
+        flex: 1 1 0px;
+        min-height: 120px;
+      }
+      
+      .column:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      
+      .why-container {
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+      }
+      
+      .why-image {
+        display: block;
+        flex: 0 0 auto;
+        width: 250px;
+      }
+    }
+    
+    @media (min-width: 1440px) {
+      .why-container {
+        justify-content: space-between;
+        max-width: 1700px;
+      }
+      
+      .why-image {
+        margin: 0 auto;
       }
     }
   </style>
