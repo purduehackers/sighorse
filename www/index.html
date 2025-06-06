@@ -433,7 +433,7 @@
       z-index: 0;
     }
 
-        /* Dithered background for NAND submission */
+    /* Dithered background for Pants submission */
     .submission-box[id="pants"]::before {
       content: '';
       position: absolute;
@@ -446,6 +446,26 @@
         radial-gradient(circle at 75% 75%, #cdb9a1 1px, transparent 1px),
         radial-gradient(circle at 25% 75%, #cdb9a1 0.5px, transparent 0.5px),
         radial-gradient(circle at 75% 25%, #cdb9a1 0.5px, transparent 0.5px),
+        white;
+      background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
+      background-position: 0 0, 4px 4px, 0 0, 2px 2px;
+      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 15% 98%, 30% 90%, 55% 70%, 75% 35%, 90% 8%);
+      z-index: 0;
+    }
+
+    /* Dithered background for TI Wordle submission */
+    .submission-box[id="ti-wordle"]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgb(118 169 102) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgb(118 169 102) 1px, transparent 1px),
+        radial-gradient(circle at 25% 75%, rgb(118 169 102) 0.5px, transparent 0.5px),
+        radial-gradient(circle at 75% 25%, rgb(118 169 102) 0.5px, transparent 0.5px),
         white;
       background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
       background-position: 0 0, 4px 4px, 0 0, 2px 2px;
@@ -826,6 +846,17 @@
                 </div>
                 <div class="submission-logo">
                   <img src="cynthia-cropped-pants.png" alt="A Pair of Brown Pants" class="submission-logo-img">
+                </div>
+              </div>
+            </a>
+            <a href="https://github.com/kdkasad/ti-wordle" target="_blank" rel="noopener noreferrer" class="submission-box clickable-submission" id="ti-wordle">
+              <div class="submission-content">
+                <div class="submission-text">
+                  <h3 class="submission-title">TI Wordle</h3>
+                  <p class="submission-author">Kian Kasad</p>
+                </div>
+                <div class="submission-logo">
+                  <img src="ti-wordle.apng" alt="TI Wordle Logo" class="submission-logo-img">
                 </div>
               </div>
             </a>
