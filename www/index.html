@@ -40,10 +40,15 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
     body {
       font-family: 'Libre Caslon', serif;
       background-color: #f5f1e8;
-      overflow-x: hidden;
       position: relative;
     }
     
@@ -217,7 +222,7 @@
     }
 
     /* Desktop layout: two-column layout with flex positioning */
-    @media (min-width: 768px) {
+    @media (min-width: 960px) {
       .content-grid {
         display: flex;
         flex-direction: row;
@@ -599,6 +604,9 @@
       transition: all 1s ease;
       border: 2px solid rgba(255,255,255,0.2);
       overflow: hidden;
+      max-width: 100%;
+      box-sizing: border-box;
+      word-wrap: break-word;
     }
     
     .discord-button:hover .discord-text {
@@ -653,7 +661,7 @@
       margin-top: 1rem;
     }
     
-    @media (min-width: 768px) {
+    @media (min-width: 960px) {
       .submission-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -705,7 +713,7 @@
     }
     
     /* Create a flex container that will adjust to available height */
-    @media (min-width: 768px) {
+    @media (min-width: 960px) {
       .what-section {
         flex: 0 0 auto; /* Don't grow, don't shrink */
       }
