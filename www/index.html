@@ -589,6 +589,7 @@
     
     .discord-button {
       display: inline-flex;
+      align-items: center; /* Ensure vertical alignment */
       background: #5865F2;
       color: white;
       font-size: 2.3rem;
@@ -626,21 +627,21 @@
     }
     
     .discord-icon {
-      height: 2.3rem; /* Synchronize with font size of Discord button */
+      height: 1em; /* Match the current font size exactly */
+      width: auto; /* Maintain aspect ratio */
       margin-right: 10px;
+      flex-shrink: 0; /* Prevent icon from shrinking */
     }
     
     .discord-text {
       display: inline-block;
+      line-height: 1; /* Ensure text height matches font size */
     }
     
     @media (max-width: 480px) {
       .discord-button {
         font-size: 2rem;
-      }
-      
-      .discord-icon {
-        height: 2rem;
+        padding: 2rem 2.5rem; /* Slightly reduce padding on small screens */
       }
     }
 
@@ -765,13 +766,17 @@
         <div class="section faq-section">
         <h2>FAQ</h2>
         <p><strong>Q: What counts as an adventure?</strong><br>
-        A: Anything you're genuinely excited about exploring! Could be learning a new skill, building something, researching a topic, creating art, or embarking on a project that excites you.</p>
+        A: Anything you're genuinely excited about exploring!
+           Could be building something, learning a new skill, researching a topic, creating art, or embarking on a project that excites you.
+        </p>
         
         <p><strong>Q: How long should my daily updates be?</strong><br>
         A: As long or short as you want! A sentence about what you learned, a photo of your progress, or a git commit.</p>
         
         <p><strong>Q: What makes a good artifact?</strong><br>
-        A: Something that captures and shares your adventure in a way that others can access and appreciate. Think websites, videos, papers, documentation, art pieces, interactive demos or zines.</p>
+        A: Something that captures and shares your adventure in a way that others can access and appreciate.
+           Think websites, videos, papers, documentation, art pieces, interactive demos or zines.
+        </p>
 
         <p><strong>Q: How many adventures am I allowed to have?</strong><br>
         A: <s>No more than three &mdash; don't be greedy.</s> As many as you want.</p>
@@ -797,15 +802,17 @@
         <!-- Section 2: What?! -->
         <div class="section what-section">
         <h2>What?!</h2>
-        <p>SIGHORSE (the Special Interest Group in Horsing Around) is a 8.8× better journal than all the other journals out there. This summer, go on an adventure (or many!), then create an artifact (blog post, video, poster, paper, embroidered horse armor), and bask in glory forevermore.</p>
+        <p>SIGHORSE (the Special Interest Group in Horsing Around) is a 8.8× better journal than all the other journals out there. This summer, go on an adventure (or many!),
+          then create artifacts (blog post, video, poster, paper, embroidered horse armor) about your adventure, and bask in glory forevermore.</p>
 
         <h3>The six easy steps to SIGHORSE</h3>
         <ul>
-          <li>Join the <a href="https://puhack.horse/discord" target="_blank" rel="noopener noreferrer">Purdue Hackers' Discord</a>.</li>
+          <li>Join the <a href="https://puhack.horse/discord" target="_blank" rel="noopener noreferrer">Purdue Hackers Discord</a>.</li>
           <li>Create a forum thread in <code>#SIGHORSE&NoBreak;🦓</code>.</li>
           <li>Make incremental progress on your adventure every day and share it in your personal thread!</li>
           <li>Get a badge if you shared an update for at least ten days, and a second secret badge for sharing an update every day.</li>
-          <li>Near the end, <b>create and share a publicly-accessible artifact</b> for inclusion in SIGHORSE! An artifact is anything archivable (something that can be saved, backed up, etc.).</li>
+          <li>Near the end, <b>create and share a publicly-accessible artifact</b> for inclusion in SIGHORSE!
+            An artifact is anything archivable (something that can be saved, backed up, etc.) that shows off your adventure.</li>
           <li>Incessantly cite your SIGHORSE artifact for the rest of your life (natural or otherwise).</li>
         </ul>
 
