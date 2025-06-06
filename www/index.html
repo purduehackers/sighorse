@@ -674,6 +674,66 @@
       margin: 0rem 0;
     }
     
+    /* ===== WHY SECTION STYLES ===== */
+    .why-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .why-content {
+      flex: 1;
+    }
+    
+    .why-image {
+      display: none; /* Hidden by default on small screens */
+    }
+    
+    .creatura-link {
+      display: block;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .creatura-image {
+      max-width: 100%;
+      height: auto;
+      transform: rotate(3deg); /* Add a slight rotation for playfulness */
+      object-fit: contain; /* Ensure image scales properly */
+      transition: transform 0.3s ease;
+    }
+    
+    .creatura-link:hover .creatura-image {
+      transform: rotate(6deg) scale(1.05); /* Increase rotation and size on hover */
+    }
+    
+    /* Show image on larger screens */
+    @media (min-width: 960px) {
+      .why-container {
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+      }
+      
+      .why-image {
+        display: block;
+        flex: 0 0 auto;
+        width: 250px;
+      }
+    }
+    
+    /* Adjust layout on very wide screens */
+    @media (min-width: 1440px) {
+      .why-container {
+        justify-content: space-between;
+        max-width: 1700px;
+      }
+      
+      .why-image {
+        margin: 0 auto;
+      }
+    }
+    
     /* ===== CREATURES GALLERY ===== */
     .creatures-gallery {
       flex: 1 1 auto; /* Allow growing and shrinking */
@@ -819,7 +879,7 @@
           <li>Create a forum thread in <code>#SIGHORSE&NoBreak;🦓</code>.</li>
           <li>Make incremental progress on your adventure every day and share it in your personal thread!</li>
           <li>Get a badge if you shared an update for at least ten days, and a second secret badge for sharing an update every day.</li>
-          <li>Near the end, <b>create and share a publicly-accessible artifact</b> for inclusion in SIGHORSE!
+          <li><b>Create and share a publicly-accessible artifact</b> for inclusion in SIGHORSE!
             An artifact is anything archivable (something that can be saved, backed up, etc.) that shows off your adventure.</li>
           <li>Incessantly cite your SIGHORSE artifact for the rest of your life (natural or otherwise).</li>
         </ul>
@@ -837,10 +897,10 @@
       </div>
       </div>
 
-      <!-- Section 5: Example SIGHORSE Submission (Full Width) -->
+      <!-- Section 5: Example SIGHORSE Adventures (Full Width) -->
       <div class="full-width-section">
         <div class="section submission-section">
-          <h2>Things that would've been SIGHORSE submissions had it existed before (Examples)</h2>
+          <h2>Things that would've been SIGHORSE adventures had it existed before (Example adventures)</h2>
           <div class="submission-grid">
             <a href="https://github.com/ArhanChaudhary/NAND" target="_blank" rel="noopener noreferrer" class="submission-box clickable-submission">
               <div class="submission-content">
@@ -886,6 +946,35 @@
                 </div>
               </div>
             </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Why should you do this?! -->
+      <div class="full-width-section">
+        <div class="section why-section">
+          <h2>Why should you do this?!</h2>
+          <div class="why-container">
+            <div class="why-content">
+              <ul>
+                <li>Studies I dreamed up show that <b>building with other people</b> is 300% more fun.</b></li>
+                <li>Tell your coworkers and friends about SIGHORSE and watch them turn green with envy! HORSE <i>with</i> your friends for triple the fun!</li>
+                <li>
+                  <a href="https://events.purduehackers.com/ama-with-steve-wozniak">Purdue</a>
+                  <a href="https://blog.purduehackers.com/posts/sign/">Hackers</a>
+                  <a href="https://www.instagram.com/p/DHuV4ZkNmZb/">is</a>
+                  <a href="https://burst.purduehackers.com/">awesome</a>.
+                  Become the awesome this summer.
+                </li>
+                <li>Earn badges (proven* to increase happiness)</li>
+              </ul>
+              <p class="footnote">* side-effects include wanting to get more badges.</p>
+            </div>
+            <div class="why-image">
+              <a href="https://www.instagram.com/p/DHoiJrwS2cm/?img_index=1" target="_blank" rel="noopener noreferrer" class="creatura-link">
+                <img src="creatura_1_transparent.png" alt="Mythical creature illustration" class="creatura-image">
+              </a>
+            </div>
           </div>
         </div>
       </div>
