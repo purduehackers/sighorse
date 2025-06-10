@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIGHORSE🦓 2025</title>
@@ -53,7 +56,8 @@
     }
 
     body {
-      font-family: 'Libre Caslon', serif;
+      font-family: 'EB Garamond', serif;
+      font-weight: 400;
       background-color: var(--main-bg-color);
       position: relative;
     }
@@ -554,6 +558,36 @@
       gap: 1.5rem;
       margin-top: 2rem;
     }
+
+       
+    .shipping-section {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .shipping-section::before{
+      content: '';
+      position: absolute;
+      inset: 0;                    /* stretch over the whole section */
+      background-image: url('creatura_2_transparent.png');
+      background-repeat: repeat;   /* tile it */
+      background-size: 120px;      /* pick a tile size */
+      opacity: .5;
+      pointer-events: none;        /* keep clicks working */
+      z-index: 0;                  /* stay behind the content */
+    }
+    
+    .shipping-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Add text shadow for better readability */
+    .shipping-section h2,
+    .shipping-section p,
+    .shipping-section code {
+      text-shadow: 0px 0px 8px white, 0px 0px 4px white, 0px 0px 2px white;
+    }
     
     .shipping-column {
       display: flex;
@@ -785,6 +819,7 @@
       }
       
       .shipping-grid {
+        opacity: 0.9;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
