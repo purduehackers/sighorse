@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+run-name: Deploy ${{ github.ref_name }} at ${{ github.sha }} by @${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - www
+      - .github/workflows/deploy.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # We don't actually have a build step for now, but we will once @rayhanadev
+  # finishes migrating to Astro, so the separation of jobs is in preparation
+  # for that.
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            www
+
+      - name: Upload site sources artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: www/
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy site to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
