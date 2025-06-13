@@ -8,6 +8,7 @@ on:
     paths:
       - www
       - .github/workflows/deploy.yml
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
