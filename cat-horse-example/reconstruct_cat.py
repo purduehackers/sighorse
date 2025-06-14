@@ -24,9 +24,10 @@ scaler = StandardScaler()
 horse_flat_scaled = scaler.fit_transform(horse_flat)
 cat_flat_scaled = scaler.transform(cat_flat.reshape(1, -1))[0]
 
-sparsity_levels = [1, 5, 10, 20, 50, 100, 200]
+sparsity_levels = [1, 5, 10, 20, 50, 100, 200, 500]
 errors = []
 nz_counts = []
+reconstructions = []
 
 for s in sparsity_levels:
     D = horse_flat_scaled[:s].T
@@ -36,13 +37,37 @@ for s in sparsity_levels:
     error = np.linalg.norm(cat_flat_scaled - recon)
     errors.append(error)
     nz_counts.append(np.sum(lasso.coef_ != 0))
+    
+    # Store reconstruction for visualization
+    recon_unscaled = scaler.inverse_transform(recon.reshape(1, -1))[0]
+    recon_img = recon_unscaled.reshape(32, 32)
+    reconstructions.append(recon_img)
 
-plt.figure(figsize=(8, 5))
-plt.plot(sparsity_levels, errors, marker='o')
-plt.xlabel('Number of Horse Images Used')
-plt.ylabel('Reconstruction Error (L2 Norm)')
-plt.title('Cat Approximation using Sparse Horse Dictionary')
-plt.grid(True)
+# Create subplot layout
+fig, axes = plt.subplots(2, 5, figsize=(20, 8))
+
+# Show original cat image
+axes[0, 0].imshow(cat_gray, cmap='gray')
+axes[0, 0].set_title('Original Cat')
+axes[0, 0].axis('off')
+
+# Show error plot
+axes[0, 1].plot(sparsity_levels, errors, marker='o')
+axes[0, 1].set_xlabel('Number of Horse Images Used')
+axes[0, 1].set_ylabel('Reconstruction Error (L2 Norm)')
+axes[0, 1].set_title('Reconstruction Error')
+axes[0, 1].grid(True)
+
+# Show reconstructions
+for i, (s, recon_img) in enumerate(zip(sparsity_levels, reconstructions)):
+    if i < 3:  # First 3 in top row
+        row, col = 0, i + 2
+    else:  # Remaining 5 in bottom row
+        row, col = 1, i - 3
+    axes[row, col].imshow(recon_img, cmap='gray')
+    axes[row, col].set_title(f'{s} horses')
+    axes[row, col].axis('off')
+
 plt.tight_layout()
 plt.show()
 
