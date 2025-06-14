@@ -21,6 +21,35 @@
       --border-radius: 8px;
       --section-padding: 2rem;
       --section-margin: 1rem;
+      --text-shadow: 0px 0px 8px white, 0px 0px 4px white, 0px 0px 2px white;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --main-bg-color: #272621;
+        --section-bg-color: rgba(40, 40, 40, 0.95);
+        --border-color: #444;
+        --text-color: #e6e6e6;
+        --box-shadow: 0 4px 8px rgba(0,0,0,0.5), 0 0 0 2px #444;
+        --text-shadow: 0px 0px 8px var(--section-bg-color), 0px 0px 4px var(--section-bg-color), 0px 0px 2px var(--section-bg-color);
+      }
+
+      a {
+        color: #4da6ff; /* Bright blue for better legibility in dark mode */
+      }
+
+      a:hover {
+        color: #66ccff; /* Slightly lighter blue on hover */
+      }
+
+      /* Invert all creatura images for dark mode */
+      .creatura-image,
+      .shipping-section::before,
+      .creatures-gallery::before,
+      .page-container::before,
+      .fig {
+        filter: invert(1);
+      }
     }
     
     /* ===== FONTS ===== */
@@ -60,6 +89,7 @@
       font-weight: 400;
       background-color: var(--main-bg-color);
       position: relative;
+      color: var(--text-color);
     }
     
     /* ===== BACKGROUND CREATURES ===== */
@@ -304,7 +334,7 @@
 
     .caption {
       font-style: italic;
-      color: #666;
+      color: #999;
       margin-top: 1rem;
     }
 
@@ -351,7 +381,7 @@
 
     /* ===== SUBMISSION COMPONENTS ===== */
     .submission-box {
-      background: white;
+      background: var(--section-bg-color);
       border-radius: 12px;
       padding: 2rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -375,7 +405,7 @@
         radial-gradient(circle at 75% 75%, var(--dither-color, transparent) 1px, transparent 1px),
         radial-gradient(circle at 25% 75%, var(--dither-color, transparent) 0.5px, transparent 0.5px),
         radial-gradient(circle at 75% 25%, var(--dither-color, transparent) 0.5px, transparent 0.5px),
-        white;
+        var(--section-bg-color);
       background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
       background-position: 0 0, 4px 4px, 0 0, 2px 2px;
       clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 15% 98%, 30% 90%, 55% 70%, 75% 35%, 90% 8%);
@@ -407,10 +437,7 @@
       justify-content: space-between;
       position: relative;
       z-index: 1;
-      text-shadow:
-        0px 0px 12px white,
-        0px 0px 5px white,
-        0px 0px 2px white;
+      text-shadow: var(--text-shadow);
     }
 
     .submission-title {
@@ -423,7 +450,7 @@
 
     .submission-author {
       font-size: 1.1rem;
-      color: #666;
+      color: var(--text-color);
       font-style: italic;
       margin-bottom: 0;
     }
@@ -557,7 +584,6 @@
       gap: 1.5rem;
       margin-top: 2rem;
     }
-
        
     .shipping-section {
       position: relative;
@@ -585,7 +611,7 @@
     .shipping-section h2,
     .shipping-section p,
     .shipping-section code {
-      text-shadow: 0px 0px 8px white, 0px 0px 4px white, 0px 0px 2px white;
+      text-shadow: var(--text-shadow);
     }
     
     .shipping-column {
@@ -595,16 +621,12 @@
     }
     
     .shipping-card {
-      background: white;
+      background: var(--section-bg-color);
       border-radius: 8px;
       padding: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      box-shadow: var(--box-shadow);
       border: 1px solid var(--border-color);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    .shipping-card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
     
     .shipping-header {
@@ -633,7 +655,7 @@
     
     .shipping-timestamp {
       font-size: 0.8rem;
-      color: #666;
+      color: #999;
     }
     
     .shipping-content p {
@@ -935,7 +957,7 @@
         </ul>
 
         <div class="svg-container">
-          <img src="sighorse-vs-all-other-conferences.svg" alt="SIGHORSE vs All Other Conferences Comparison Chart">
+          <img class="fig" src="sighorse-vs-all-other-conferences.svg" alt="SIGHORSE vs All Other Conferences Comparison Chart">
           <div class="caption">Fig. 1</div>
         </div>
         </div>
