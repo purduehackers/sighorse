@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - www
+      - www/**
       - .github/workflows/deploy.yml
   workflow_dispatch:
 
