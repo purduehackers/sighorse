@@ -136,10 +136,14 @@
     /* ===== GLOBAL EFFECTS ===== */
     /* Slight rotation applied to most text elements for playful effect */
     h1, h2, h3, h4, h5, h6, p, li, 
-    div:not(.page-container):not(.main-content):not(.content-grid):not(#p5-canvas-container), 
+    div:not(.no-tilt), 
     span:not(.letter), 
     .time-number, .time-label, .counter-title, .caption {
       transform: rotate(0.25deg);
+    }
+    /* Undo rotation on deeply-nested elements */
+    .shipping-grid * {
+      transform: rotate(0deg) !important;
     }
 
     /* Serious section maintains straight alignment */
@@ -553,11 +557,12 @@
       max-width: 100%;
       box-sizing: border-box;
       word-wrap: break-word;
+      text-decoration: none;
     }
     
-    .discord-button:hover .discord-text {
-      display: inline-block;
+    .discord-button:hover {
       animation: rotateText 1s infinite;
+      color: white;
     }
     
     @keyframes rotateText {
@@ -904,15 +909,15 @@
   </style>
 </head>
 <body>
-  <div class="page-container">
+  <div class="page-container no-tilt">
     <!-- Main Content -->
-    <div class="main-content">
-      <div class="content-grid">
+    <div class="main-content no-tilt">
+      <div class="content-grid no-tilt">
       <!-- Column 1: Section 1 (zebra animation), Section 3 (FAQ), Section 4 (Serious Submissions) -->
       <div class="column">
         <!-- Section 1: Hero with p5.js canvas background -->
         <div class="intro-section">
-        <div id="p5-canvas-container"></div>
+        <div id="p5-canvas-container no-tilt"></div>
         <div class="hero-content">
           <h1 class="title">
           <span class="letter">S</span><span class="letter">I</span><span class="letter">G</span><span class="letter">H</span><span class="letter">O</span><span class="letter">R</span><span class="letter">S</span><span class="letter">E</span><span class="letter">🦓</span>
@@ -1070,33 +1075,34 @@
       <div class="full-width-section">
         <div class="section shipping-section">
           <h2>All aboard the <code>#&NoBreak;🚢&NoBreak;ship</code>!</h2>
-          <p>Whenever a HORSEr makes meaningful progress on their adventure, they post it in the <code>#&NoBreak;🚢&NoBreak;ship</code> channel. These are the latest ships:</p>
+          <p>Whenever a HORSEr makes meaningful progress on their adventure, they post it in the <code>#&NoBreak;🚢&NoBreak;ship</code> channel. These are some notable ships:</p>
           <div class="shipping-grid">
             <div class="shipping-column">
               <div class="shipping-card">
                 <div class="shipping-header">
-                  <img src="https://i.pravatar.cc/40?img=1" alt="Profile" class="shipping-avatar">
+                  <img src="static/ship-images/2ca46b5853fbdc245c547efe876cf25e.webp" alt="Profile" class="shipping-avatar">
                   <div class="shipping-user-info">
-                    <span class="shipping-username">adventurer_alex</span>
-                    <span class="shipping-timestamp">Today at 2:30 PM</span>
+                    <span class="shipping-username">fizzyapple12</span>
+                    <span class="shipping-timestamp">Tuesday, November 19, 2024 at 6:22 PM</span>
                   </div>
                 </div>
                 <div class="shipping-content">
-                  <p>Just finished implementing the physics engine for my game! The collision detection is finally working properly. Next up: adding particle effects for explosions! 🎮✨</p>
-                  <img src="https://picsum.photos/400/250?random=1" alt="Game screenshot" class="shipping-image">
+                  <p>After nearly three continuous days of work, the robot arm's electrical cabinet was completely gutted, cleaned, and reassembled</p>
+                  <img src="static/ship-images/PXL_20241120_022054524.jpg" alt="Interior of robot arm electrical cabinet" class="shipping-image">
                 </div>
               </div>
               
               <div class="shipping-card">
                 <div class="shipping-header">
-                  <img src="https://i.pravatar.cc/40?img=3" alt="Profile" class="shipping-avatar">
+                  <img src="static/ship-images/3fa265211f9a56d23b99c52eab6468ee.webp" alt="Profile" class="shipping-avatar">
                   <div class="shipping-user-info">
-                    <span class="shipping-username">data_explorer</span>
-                    <span class="shipping-timestamp">Today at 1:15 PM</span>
+                    <span class="shipping-username">𝕬ydenGPT</span>
+                    <span class="shipping-timestamp">Thursday, December 26, 2024 at 5:07 PM</span>
                   </div>
                 </div>
                 <div class="shipping-content">
-                  <p>Spent the morning cleaning and analyzing 10GB of climate data. Found some interesting patterns in temperature fluctuations over the past decade. The visualizations are coming together nicely!</p>
+                  <p>COMMIT: Abacus. Uses magnets to hold the beads in place.</p>
+                  <img src="static/ship-images/PXL_20241227_010257969.MP.jpg" alt="Abacus held in hand" class="shipping-image" />
                 </div>
               </div>
             </div>
@@ -1104,28 +1110,29 @@
             <div class="shipping-column">
               <div class="shipping-card">
                 <div class="shipping-header">
-                  <img src="https://i.pravatar.cc/40?img=2" alt="Profile" class="shipping-avatar">
+                  <img src="static/ship-images/89c59de97fdb5f90999d86fed01f23fe.webp" alt="Profile" class="shipping-avatar">
                   <div class="shipping-user-info">
-                    <span class="shipping-username">craft_master</span>
-                    <span class="shipping-timestamp">Today at 3:45 PM</span>
+                    <span class="shipping-username">Lillith ᓚᘏᗢ (INX)</span>
+                    <span class="shipping-timestamp">Monday, January 13, 2025 at 10:05 PM</span>
                   </div>
                 </div>
                 <div class="shipping-content">
-                  <p>Finally got my 3D printer calibrated perfectly! First successful print of my custom keyboard case. The tolerances are spot-on and it fits like a glove. Time to start on the key switches! ⌨️</p>
-                  <img src="https://picsum.photos/400/300?random=2" alt="3D printed keyboard case" class="shipping-image">
+                  <p>Setup my optiplex to expose my receipt printer over tailscale, and make a quick script to print a todo list :)</p>
+                  <img src="static/ship-images/rn_image_picker_lib_temp_98dd3471-1e3e-4f6e-b122-efc9ca69fdbf.jpg" alt="Printed to-do list receipt" class="shipping-image">
                 </div>
               </div>
-              
+
               <div class="shipping-card">
                 <div class="shipping-header">
-                  <img src="https://i.pravatar.cc/40?img=4" alt="Profile" class="shipping-avatar">
+                  <img src="static/ship-images/279153c7dc2e3bc00e0ada73c099ce5c.webp" alt="Profile" class="shipping-avatar">
                   <div class="shipping-user-info">
-                    <span class="shipping-username">ml_enthusiast</span>
-                    <span class="shipping-timestamp">Today at 12:20 PM</span>
+                    <span class="shipping-username">DitrusNight</span>
+                    <span class="shipping-timestamp">Saturday, March 22, 2025 at 4:55 PM</span>
                   </div>
                 </div>
                 <div class="shipping-content">
-                  <p>My neural network is finally converging! After 3 days of debugging, I found the issue was in the learning rate scheduler. Training accuracy just hit 94% on the validation set. Machine learning is equal parts frustrating and magical 🤖</p>
+                  <p>Apartment shopping and I wanted to know which apartments that were available have good Internet…. So I got the Zillow json data, put it through the FCC’s api, and made a color coded map based on ISP fiber availability</p>
+                  <img src="static/ship-images/IMG_1794.jpg" alt="Digital map with markers for apartment locations and a popup showing details of the selected apartment" class="shipping-image">
                 </div>
               </div>
             </div>
@@ -1135,7 +1142,8 @@
 
       <!-- Countdown Section -->
       <div class="counter-section">
-      <h2 class="counter-title">Start sharing your progress <!--(officially)--> in:</h2>
+      <h2 class="counter-title">Start sharing your progress! <!--(officially) in:--></h2>
+      <!--
       <div class="countdown">
         <div class="time-unit">
         <span class="time-number" id="days">0</span>
@@ -1155,6 +1163,7 @@
         </div>
       </div>
       <p style="margin-top: 1rem; font-size: 2.2rem">(But how about you start hanging out in our Discord <i>now</i>?)</p>
+      -->
       
       <!-- Discord Button -->
       <div class="discord-button-container">
