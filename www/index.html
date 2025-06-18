@@ -136,10 +136,14 @@
     /* ===== GLOBAL EFFECTS ===== */
     /* Slight rotation applied to most text elements for playful effect */
     h1, h2, h3, h4, h5, h6, p, li, 
-    div:not(.page-container):not(.main-content):not(.content-grid):not(#p5-canvas-container), 
+    div:not(.no-tilt), 
     span:not(.letter), 
     .time-number, .time-label, .counter-title, .caption {
       transform: rotate(0.25deg);
+    }
+    /* Undo rotation on deeply-nested elements */
+    .shipping-grid * {
+      transform: rotate(0deg) !important;
     }
 
     /* Serious section maintains straight alignment */
@@ -905,15 +909,15 @@
   </style>
 </head>
 <body>
-  <div class="page-container">
+  <div class="page-container no-tilt">
     <!-- Main Content -->
-    <div class="main-content">
-      <div class="content-grid">
+    <div class="main-content no-tilt">
+      <div class="content-grid no-tilt">
       <!-- Column 1: Section 1 (zebra animation), Section 3 (FAQ), Section 4 (Serious Submissions) -->
       <div class="column">
         <!-- Section 1: Hero with p5.js canvas background -->
         <div class="intro-section">
-        <div id="p5-canvas-container"></div>
+        <div id="p5-canvas-container no-tilt"></div>
         <div class="hero-content">
           <h1 class="title">
           <span class="letter">S</span><span class="letter">I</span><span class="letter">G</span><span class="letter">H</span><span class="letter">O</span><span class="letter">R</span><span class="letter">S</span><span class="letter">E</span><span class="letter">🦓</span>
