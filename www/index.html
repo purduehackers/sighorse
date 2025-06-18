@@ -367,33 +367,6 @@
       font-weight: 600;
     }
 
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .time-unit {
-      background: rgba(255,255,255,0.1);
-      padding: 1.5rem;
-      border-radius: var(--border-radius);
-      min-width: 120px;
-    }
-
-    .time-number {
-      font-size: 3rem;
-      font-weight: bold;
-      display: block;
-    }
-
-    .time-label {
-      font-size: 0.9rem;
-      opacity: 0.8;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
     /* ===== SUBMISSION COMPONENTS ===== */
     .submission-box {
       background: var(--section-bg-color);
@@ -1156,27 +1129,6 @@
       <!-- Countdown Section -->
       <div class="counter-section">
       <h2 class="counter-title">Start sharing your progress! <!--(officially) in:--></h2>
-      <!--
-      <div class="countdown">
-        <div class="time-unit">
-        <span class="time-number" id="days">0</span>
-        <span class="time-label">Days</span>
-        </div>
-        <div class="time-unit">
-        <span class="time-number" id="hours">0</span>
-        <span class="time-label">Hours</span>
-        </div>
-        <div class="time-unit">
-        <span class="time-number" id="minutes">0</span>
-        <span class="time-label">Minutes</span>
-        </div>
-        <div class="time-unit">
-        <span class="time-number" id="seconds">0</span>
-        <span class="time-label">Seconds</span>
-        </div>
-      </div>
-      <p style="margin-top: 1rem; font-size: 2.2rem">(But how about you start hanging out in our Discord <i>now</i>?)</p>
-      -->
       
       <!-- Discord Button -->
       <div class="discord-button-container">
@@ -1254,9 +1206,6 @@
       
       updateCurrentTime();
       
-      // Start the countdown timer
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
     }
     
     function updateCurrentTime() {
@@ -1427,30 +1376,6 @@
         
         model(zebra);
         pop();
-      }
-    }
-
-        // Countdown timer function
-    function updateCountdown() {
-      const conferenceDate = new Date('2025-06-15T00:00:00Z'); // June 15, 2025, 12 AM GMT
-      const now = new Date();
-      const timeLeft = conferenceDate - now;
-      
-      if (timeLeft > 0) {
-        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours;
-        document.getElementById('minutes').textContent = minutes;
-        document.getElementById('seconds').textContent = seconds;
-      } else {
-        document.getElementById('days').textContent = '0';
-        document.getElementById('hours').textContent = '0';
-        document.getElementById('minutes').textContent = '0';
-        document.getElementById('seconds').textContent = '0';
       }
     }
     
