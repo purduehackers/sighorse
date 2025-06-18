@@ -136,14 +136,10 @@
     /* ===== GLOBAL EFFECTS ===== */
     /* Slight rotation applied to most text elements for playful effect */
     h1, h2, h3, h4, h5, h6, p, li, 
-    div:not(.no-tilt), 
+    div:not(.no-generic-tilt), 
     span:not(.letter), 
     .time-number, .time-label, .counter-title, .caption {
       transform: rotate(0.25deg);
-    }
-    /* Undo rotation on deeply-nested elements */
-    .shipping-grid * {
-      transform: rotate(0deg) !important;
     }
 
     /* Serious section maintains straight alignment */
@@ -906,18 +902,35 @@
         margin: 0 auto;
       }
     }
+
+    /* Additional styles for card rotations */
+    .card-1 {
+      transform: rotate(-1deg);
+    }
+
+    .card-2 {
+      transform: rotate(-1.2deg);
+    }
+
+    .card-3 {
+      transform: rotate(1.6deg);
+    }
+
+    .card-4 {
+      transform: rotate(0.1deg);
+    }
   </style>
 </head>
 <body>
-  <div class="page-container no-tilt">
+  <div class="page-container no-generic-tilt">
     <!-- Main Content -->
-    <div class="main-content no-tilt">
-      <div class="content-grid no-tilt">
+    <div class="main-content no-generic-tilt">
+      <div class="content-grid no-generic-tilt">
       <!-- Column 1: Section 1 (zebra animation), Section 3 (FAQ), Section 4 (Serious Submissions) -->
       <div class="column">
         <!-- Section 1: Hero with p5.js canvas background -->
         <div class="intro-section">
-        <div id="p5-canvas-container no-tilt"></div>
+        <div id="p5-canvas-container no-generic-tilt"></div>
         <div class="hero-content">
           <h1 class="title">
           <span class="letter">S</span><span class="letter">I</span><span class="letter">G</span><span class="letter">H</span><span class="letter">O</span><span class="letter">R</span><span class="letter">S</span><span class="letter">E</span><span class="letter">🦓</span>
@@ -1076,9 +1089,9 @@
         <div class="section shipping-section">
           <h2>All aboard the <code>#&NoBreak;🚢&NoBreak;ship</code>!</h2>
           <p>Whenever a HORSEr makes meaningful progress on their adventure, they post it in the <code>#&NoBreak;🚢&NoBreak;ship</code> channel. These are some notable ships:</p>
-          <div class="shipping-grid">
+          <div class="shipping-grid no-generic-tilt">
             <div class="shipping-column">
-              <div class="shipping-card">
+              <div class="shipping-card no-generic-tilt card-1">
                 <div class="shipping-header">
                   <img src="static/ship-images/2ca46b5853fbdc245c547efe876cf25e.webp" alt="Profile" class="shipping-avatar">
                   <div class="shipping-user-info">
@@ -1092,7 +1105,7 @@
                 </div>
               </div>
               
-              <div class="shipping-card">
+              <div class="shipping-card no-generic-tilt card-2">
                 <div class="shipping-header">
                   <img src="static/ship-images/3fa265211f9a56d23b99c52eab6468ee.webp" alt="Profile" class="shipping-avatar">
                   <div class="shipping-user-info">
@@ -1108,7 +1121,7 @@
             </div>
             
             <div class="shipping-column">
-              <div class="shipping-card">
+              <div class="shipping-card no-generic-tilt card-3">
                 <div class="shipping-header">
                   <img src="static/ship-images/89c59de97fdb5f90999d86fed01f23fe.webp" alt="Profile" class="shipping-avatar">
                   <div class="shipping-user-info">
@@ -1122,7 +1135,7 @@
                 </div>
               </div>
 
-              <div class="shipping-card">
+              <div class="shipping-card no-generic-tilt card-4">
                 <div class="shipping-header">
                   <img src="static/ship-images/279153c7dc2e3bc00e0ada73c099ce5c.webp" alt="Profile" class="shipping-avatar">
                   <div class="shipping-user-info">
@@ -1463,40 +1476,40 @@
           gallery.classList.add('hide-gallery');
         }
       }
-    }
+    }      }
 
-    let targetRotation = 0;
-    let currentRotation = 0;
-
+    let targetRotation = 0;      // Linear interpolation (lerp)
+    let currentRotation = 0;ler = smoother & slower
+ currentRotation += (targetRotation - currentRotation) * smoothing;
     function updateTargetRotation() {
-      const scrollTop = window.scrollY;
+      const scrollTop = window.scrollY;ion', `${currentRotation}deg`);
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-
+ationFrame(animate);
       // Map scroll position to rotation (feel free to adjust multiplier)
       targetRotation = (scrollTop / maxScroll) * 20;
-    }
+    }    window.addEventListener('scroll', updateTargetRotation);
 
-    function animate() {
-      if (prefersReducedMotion) {
-        // If reduced motion is preferred, skip animation
-        return;
-      }
+    function animate() {Initialize
+      // Linear interpolation (lerp)ateTargetRotation();
+      const smoothing = 0.07; // smaller = smoother & slower    animate();
 
-      // Linear interpolation (lerp)
-      const smoothing = 0.07; // smaller = smoother & slower
-      currentRotation += (targetRotation - currentRotation) * smoothing;
 
-      document.documentElement.style.setProperty('--bg-rotation', `${currentRotation}deg`);
 
-      requestAnimationFrame(animate);
-    }
 
-    window.addEventListener('scroll', updateTargetRotation);
 
-    // Initialize
-    updateTargetRotation();
-    animate();
 
+
+
+
+
+
+
+
+
+
+
+
+</html></body>  </script>    animate();    updateTargetRotation();    // Initialize    window.addEventListener('scroll', updateTargetRotation);    }      requestAnimationFrame(animate);      document.documentElement.style.setProperty('--bg-rotation', `${currentRotation}deg`);      currentRotation += (targetRotation - currentRotation) * smoothing;
   </script>
 </body>
 </html>
