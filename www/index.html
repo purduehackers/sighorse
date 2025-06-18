@@ -353,7 +353,7 @@
       margin-top: 1rem;
     }
 
-    /* ===== COUNTDOWN SECTION ===== */
+        /* ===== COUNTDOWN SECTION ===== */
     .counter-section {
       background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
       color: white;
@@ -903,7 +903,7 @@
       <div class="column">
         <!-- Section 1: Hero with p5.js canvas background -->
         <div class="intro-section">
-        <div id="p5-canvas-container no-generic-tilt"></div>
+        <div id="p5-canvas-container" class="no-generic-tilt"></div>
         <div class="hero-content">
           <h1 class="title">
           <span class="letter">S</span><span class="letter">I</span><span class="letter">G</span><span class="letter">H</span><span class="letter">O</span><span class="letter">R</span><span class="letter">S</span><span class="letter">E</span><span class="letter">🦓</span>
@@ -1191,8 +1191,8 @@
       
       // Create canvas sized to fit the hero section container
       let container = document.getElementById('p5-canvas-container');
-      let canvas = createCanvas(container.offsetWidth, container.offsetHeight, WEBGL);
-      canvas.parent('p5-canvas-container');
+        let canvas = createCanvas(container.offsetWidth, container.offsetHeight, WEBGL);
+        canvas.parent('p5-canvas-container');
       
       // Create stars (only visible at night)
       for (let i = 0; i < 200; i++) {
@@ -1401,40 +1401,40 @@
           gallery.classList.add('hide-gallery');
         }
       }
-    }      }
+    }
 
-    let targetRotation = 0;      // Linear interpolation (lerp)
-    let currentRotation = 0;ler = smoother & slower
- currentRotation += (targetRotation - currentRotation) * smoothing;
+    let targetRotation = 0;
+    let currentRotation = 0;
+
     function updateTargetRotation() {
-      const scrollTop = window.scrollY;ion', `${currentRotation}deg`);
+      const scrollTop = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-ationFrame(animate);
+
       // Map scroll position to rotation (feel free to adjust multiplier)
       targetRotation = (scrollTop / maxScroll) * 20;
-    }    window.addEventListener('scroll', updateTargetRotation);
+    }
 
-    function animate() {Initialize
-      // Linear interpolation (lerp)ateTargetRotation();
-      const smoothing = 0.07; // smaller = smoother & slower    animate();
+    function animate() {
+      if (prefersReducedMotion) {
+        // If reduced motion is preferred, skip animation
+        return;
+      }
 
+      // Linear interpolation (lerp)
+      const smoothing = 0.07; // smaller = smoother & slower
+      currentRotation += (targetRotation - currentRotation) * smoothing;
 
+      document.documentElement.style.setProperty('--bg-rotation', `${currentRotation}deg`);
 
+      requestAnimationFrame(animate);
+    }
 
+    window.addEventListener('scroll', updateTargetRotation);
 
+    // Initialize
+    updateTargetRotation();
+    animate();
 
-
-
-
-
-
-
-
-
-
-
-
-</html></body>  </script>    animate();    updateTargetRotation();    // Initialize    window.addEventListener('scroll', updateTargetRotation);    }      requestAnimationFrame(animate);      document.documentElement.style.setProperty('--bg-rotation', `${currentRotation}deg`);      currentRotation += (targetRotation - currentRotation) * smoothing;
   </script>
 </body>
 </html>
