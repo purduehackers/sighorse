@@ -893,9 +893,41 @@
     .card-4 {
       transform: rotate(0.1deg);
     }
+    /* ===== DISCLAIMER BAR STYLES ===== */
+    .disclaimer-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #ffcc02, #ffa500);
+      color: #2c2c2c;
+      padding: 12px 20px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 1000;
+      transform: rotate(0deg);
+      border-bottom: 2px solid #e6d7c3;
+    }
+
+    .disclaimer-bar.post-deadline {
+      background: linear-gradient(135deg, #4a90e2, #357abd);
+      color: white;
+    }
+
+    /* Adjust body padding to account for fixed disclaimer bar */
+    body {
+      padding-top: 60px;
+    }    
   </style>
 </head>
 <body>
+  <!-- Disclaimer Bar -->
+  <div class="disclaimer-bar" id="disclaimer-bar">
+    <span id="disclaimer-text">SIGHORSE submissions due on August 25. Note that the deadline is flexible and may be adjusted on a case-by-case basis.</span>
+  </div>
+
   <div class="page-container no-generic-tilt">
     <!-- Main Content -->
     <div class="main-content no-generic-tilt">
@@ -1435,6 +1467,38 @@
     // Initialize
     updateTargetRotation();
     animate();
+
+    // ===== DISCLAIMER BAR LOGIC =====
+    function updateDisclaimerBar() {
+      const disclaimerBar = document.getElementById('disclaimer-bar');
+      const disclaimerText = document.getElementById('disclaimer-text');
+      
+      if (!disclaimerBar || !disclaimerText) return;
+      
+      // Current date
+      const today = new Date();
+      // Deadline date (August 25, 2025)
+      const deadline = new Date(2025, 7, 25); // Month is 0-indexed, so 7 = August
+      
+      if (today > deadline) {
+        // After August 25, 2025
+        disclaimerText.textContent = "SIGHORSE submissions were due on August 25, and are being edited and reviewed right now.";
+        disclaimerBar.classList.add('post-deadline');
+      } else {
+        // Before or on August 25, 2025
+        disclaimerText.textContent = "SIGHORSE submissions due on August 25. Note that the deadline is flexible and may be adjusted on a case-by-case basis.";
+        disclaimerBar.classList.remove('post-deadline');
+      }
+    }
+
+    // Update disclaimer on page load
+    document.addEventListener('DOMContentLoaded', updateDisclaimerBar);
+    // Also update immediately if DOM is already loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', updateDisclaimerBar);
+    } else {
+      updateDisclaimerBar();
+    }
 
   </script>
 </body>
