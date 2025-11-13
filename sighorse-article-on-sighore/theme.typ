@@ -129,7 +129,7 @@
 // This WILL set the title in the document's metadata as well.
 #let title(it, author) = context {
   assert(type(it) == content, message: "title must be content")
-  set text(size: 25pt, font: heading-font-state.get(), weight: "black", tracking: -2pt)
+  set text(size: 25pt, font: heading-font-state.get(), weight: "black", tracking: -1.5pt)
   set document(title: it)
   set par(leading: 10pt)
   it

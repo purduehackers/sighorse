@@ -10,17 +10,18 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node, shapes.diamond
 
 #import "theme.typ": theme, title
+
+// two different font styles to have fun with whoever notices
 #show: theme.with(
   heading-font: "Iosevka SS05",
   body-font: "Iosevka SS03",
 )
-// #set page(margin: (right: 5cm))
 #set par(justify: true)
 #set document(
-  // title will be set by #title[]
   author: "Kartavya Vashishtha",
 )
-#let sidenote = sidenote.with(numbering: "1", padding: (left: 1em, right: 2em))
+
+#let small-font-size = 8pt
 
 #title[The Foreword / an empirical lower-bound on the number of pages you can spend talking about SIGHORSE in SIGHORSE][Kart]
 
@@ -28,10 +29,10 @@ Hi! I'm Kart. I came up with SIGHORSE, made the website, solicited and (sometime
 
 I'd like to talk about SIGHORSE for a bit.
 
-There are three parts to this article:
+There are three parts to this piece:
 1. Why the word "horse"? Why is it relevant? What does it mean to Purdue Hackers?
 2. Why work on this journal? What forces made us want to create SIGHORSE?
-3. Can I see the process of making the cover? I'm sure it wasn't too much work.
+3. Can we see the process of making the cover? Surely it wasn't too much work.
 
 = Bringing forth a longing for horsing into the world
 
@@ -42,7 +43,7 @@ There are three parts to this article:
 
 Since forever, horses have been intertwined with the Purdue Hackers brand.
 
-Discord#footnote[Discord is an online group messaging platform used by Purdue Hackers. It is a centerpiece of the community, and many important discussions happen there.] archaeology points to a particular member starting the conversation off in September 2022 with messages like:
+Discord#footnote[Discord is an online group messaging platform used by Purdue Hackers. It is a centerpiece of the community, and many important discussions happen there.] archaeology points to a particular person starting the conversation off in September 2022 with messages like:
 #quote(block: true)[
   - our mascot should be an 8-bit horse \
     Also the horse should be yellow \
@@ -50,18 +51,21 @@ Discord#footnote[Discord is an online group messaging platform used by Purdue Ha
   - Here's a horse that's shaking: https://shakingmy.horse/
 ]
 
-The discussion significantly escalated on the next day, when the same member posted:
+The discussion significantly escalated on the next day, when the same person posted:
 
 #quote(
   block: true,
 )[Today I forked my personal link shortener to use it for Purdue Hackers. Introducing puhack.horse#footnote[It redirects to https://www.purduehackers.com/] \ ...]
 
-This member then served as the President of Purdue Hackers for three years, and led its rise from a 20 person meetup to a 80-100 person
+This person then served as the President of Purdue Hackers for three years, and led its rise from a 20 person meetup to a 80-100 person
 organization with sprawling projects, ideas, and coolness.
 
 Is it any surprise that a club that emphasizes engaging in whimsy and creating things that bring joy would latch on to "horse"?
 
 = Putting the Special Interest Group in the Horse
+
+We've established the importance of horses. Now, let's explore how the Special Interest Group part came about.
+
 == BURSTing from creativity
 In Fall 2024, Purdue Hackers hosted a showcase for a bunch of projects that members had created. They called it BURST#footnote[https://burst.purduehackers.com/]. It was glorious. Seriously. Here're some photos from BURST to show you just how glorious it was. _I strongly encourage you to check out the website for more photos and information on the exhibits._
 
@@ -75,12 +79,10 @@ BURST included (among other things) (in clockwise order):
 - a phone bell whose insides had been replaced with a Raspberry Pi,
 - the Purdue Hackers logo as a meter tall sign,
 - a receipt printer,
-- and an indie video game about running a boba shop.
+- an indie video game about running a boba shop.
 
 It was so glorious, in fact, that it challenged my imagination to think of it even _could_ get more glorious. How could we ever top
 the projects that we'd showcased this year? How could we inspire more members of Hackers to make contributions to the next showcase we hosted?
-
-I'd built and presented a project at BURST out of a desire to give back to the community for all the joy I'd gotten from it.
 
 *How could _I_ engage more members and spread the joy of creating and presenting?*
 
@@ -99,8 +101,12 @@ This event saw great participation from the community: people shipped commits an
 
 == SIGBOVIK
 
-Now to talk about something completely different: SIGBOVIK#footnote[https://sigbovik.org/] is an yearly joke journal organized primarily by grad students from Carnegie Melon University with clearly too much time on their hands. The latest edition is just over 400 pages long. Papers published in this illustrious journal have had titles such as
-_"An Empirically Verified Lower Bound for The Number Of Empty Pages Allowed In a SIGBOVIK Paper"_ or _" A Genius Solution: Applications of the Sprague-Grundy Theorem to Korean Reality TV"_.
+Now to talk about something completely different: SIGBOVIK#footnote[https://sigbovik.org/] (Special Interest Group in Harry Quark Bovik) is an yearly joke journal organized primarily by grad students from Carnegie Melon University with clearly too much time on their hands.
+
+Their name plays on the Association for Computing Machinery's many conferences that start with SIG#footnote[https://www.acm.org/special-interest-groups/alphabetical-listing]: SIGPLAN (Special Interest Group on Programming Languages), SIGGRAPH (Special Interest Group on Graphics), SIGMICRO (Special Interest Group on Microarchitecture), etc.
+
+The latest edition is just over 400 pages long. Papers published in this illustrious journal have had titles such as
+_"An Empirically Verified Lower Bound for The Number Of Empty Pages Allowed In a SIGBOVIK Paper"_ or _"A Genius Solution: Applications of the Sprague-Grundy Theorem to Korean Reality TV"_.
 
 #figure()[
   #diagram(
@@ -135,36 +141,28 @@ _"An Empirically Verified Lower Bound for The Number Of Empty Pages Allowed In a
       "->",
       label-side: left,
     ),
-    // Invisible edge for explanation (on bottom)
     edge(
       <read>,
       <enjoy>,
-      text(size: 7pt)["Thanks!"],
+      text(size: small-font-size)["Thanks!"],
       label-side: right,
     ),
-
-    // --- Edge: read -> end (No, bent downwards) ---
-    // Visible arrow for "No" (on the inside/above the curve)
     edge(
       <read>,
       <end>,
       [No],
       "->",
-      bend: -30deg, // Adjusted bend
+      bend: -30deg,
       label-side: left,
     ),
-    // Invisible edge for explanation (on the outside/below the curve)
     edge(
       <read>,
       <end>,
-      text(size: 7pt)["If you didn't read SIGHORSE, \
+      text(size: small-font-size)["If you didn't read SIGHORSE, \
         SIGBOVIK may be interesting."],
-      bend: -30deg, // Same bend as visible edge
+      bend: -30deg,
       label-side: right,
     ),
-
-    // --- Edge: enjoy -> end (Yes) ---
-    // Visible arrow for "Yes" (on top)
     edge(
       <enjoy>,
       <end>,
@@ -172,31 +170,26 @@ _"An Empirically Verified Lower Bound for The Number Of Empty Pages Allowed In a
       "->",
       label-side: left,
     ),
-    // Invisible edge for explanation (on bottom)
     edge(
       <enjoy>,
       <end>,
-      align(center)[#text(size: 7pt)["More of \ the same!"]],
+      align(center)[#text(size: small-font-size)["More of \ the same!"]],
       label-side: right,
     ),
-
-    // --- Edge: enjoy -> end (No, bent upwards) ---
-    // Visible arrow for "No" (on the inside/below the curve)
     edge(
       <enjoy>,
       <end>,
       [No],
       "->",
-      bend: 50deg, // Adjusted bend
+      bend: 50deg,
       label-side: right,
     ),
-    // Invisible edge for explanation (on the outside/above the curve)
     edge(
       <enjoy>,
       <end>,
-      align(center)[#text(size: 7pt)["If you didn't enjoy SIGHORSE, \
+      align(center)[#text(size: small-font-size)["If you didn't enjoy SIGHORSE, \
         maybe SIGBOVIK would be more your speed."]],
-      bend: 50deg, // Same bend as visible edge
+      bend: 50deg,
       label-side: left,
     ),
   )]
