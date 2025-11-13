@@ -22,7 +22,11 @@
 )
 #let sidenote = sidenote.with(numbering: "1", padding: (left: 1em, right: 2em))
 
-#title[An empirical lower-bound on the number of pages you can spend talking about SIGHORSE in SIGHORSE][Kart]
+#title[The Foreword / an empirical lower-bound on the number of pages you can spend talking about SIGHORSE in SIGHORSE][Kart]
+
+Hi! I'm Kart. I came up with SIGHORSE, made the website, solicited and (sometimes) reviewed submissions from authors. I was, of course, helped immeasurably by many people without whom SIGHORSE would not be possible, but ideally you've already seen their names before this article.
+
+I'd like to talk about SIGHORSE for a bit.
 
 There are three parts to this article:
 1. Why the word "horse"? Why is it relevant? What does it mean to Purdue Hackers?
@@ -35,8 +39,6 @@ There are three parts to this article:
   attribution: [Purdue Hackers website, but I removed the emojis],
   block: true,
 )[Purdue Hackers: a community of students who collaborate, learn, and build kick-ass technical projects.]
-
-== The origins of horses
 
 Since forever, horses have been intertwined with the Purdue Hackers brand.
 
@@ -57,19 +59,23 @@ The discussion significantly escalated on the next day, when the same member pos
 This member then served as the President of Purdue Hackers for three years, and led its rise from a 20 person meetup to a 80-100 person
 organization with sprawling projects, ideas, and coolness.
 
-== Towards honse
-
-The word "horse"---and its diminutive derivative "honse"---are now recurring themes in many Discord conversations.
-
-Purdue Hackers as a club often emphasizes engaging in whimsy and creating things that bring joy. It follows that the community has
-latched on to "horse" in some of the things we talk about.
-
+Is it any surprise that a club that emphasizes engaging in whimsy and creating things that bring joy would latch on to "horse"?
 
 = Putting the Special Interest Group in the Horse
 == BURSTing from creativity
-In Fall 2024, Purdue Hackers hosted a showcase called BURST#footnote[https://burst.purduehackers.com/]. It was glorious. Seriously. Here's a mini photo collage from BURST to show you just how glorious it was.
+In Fall 2024, Purdue Hackers hosted a showcase for a bunch of projects that members had created. They called it BURST#footnote[https://burst.purduehackers.com/]. It was glorious. Seriously. Here're some photos from BURST to show you just how glorious it was. _I strongly encourage you to check out the website for more photos and information on the exhibits._
 
-#image("BURST collage.png")
+#figure(caption: [], numbering: none, grid(
+  columns: (1fr, 1fr),
+  image("burst-photos/image.png"), block(inset: (left: -37.75pt, right: -37.75pt), clip: true)[#image("burst-photos/image copy 4.png", fit: "contain", height: 170pt)],
+  image("burst-photos/image copy 2.png"), image("burst-photos/image copy 3.png")
+))
+
+BURST included (among other things) (in clockwise order):
+- a phone bell whose insides had been replaced with a Raspberry Pi,
+- the Purdue Hackers logo as a meter tall sign,
+- a receipt printer,
+- and an indie video game about running a boba shop.
 
 It was so glorious, in fact, that it challenged my imagination to think of it even _could_ get more glorious. How could we ever top
 the projects that we'd showcased this year? How could we inspire more members of Hackers to make contributions to the next showcase we hosted?
@@ -99,6 +105,7 @@ _"An Empirically Verified Lower Bound for The Number Of Empty Pages Allowed In a
 #figure()[
   #diagram(
     node-stroke: 1pt,
+    edge-stroke: 1pt,
 
     node(
       (0, 0),
@@ -169,7 +176,7 @@ _"An Empirically Verified Lower Bound for The Number Of Empty Pages Allowed In a
     edge(
       <enjoy>,
       <end>,
-      text(size: 7pt)["More of \ the same!"],
+      align(center)[#text(size: 7pt)["More of \ the same!"]],
       label-side: right,
     ),
 
@@ -196,7 +203,7 @@ _"An Empirically Verified Lower Bound for The Number Of Empty Pages Allowed In a
 
 = Messily pushing the horsing out to the world
 == Defining SIGHORSE
-Finally, we can unify the two topics we discussed in the previous section: "what if we ran something like Commit Overflow but in the summer and with a focus on whimsy and silliness?" Our tenets would be:
+Finally, we can unify the two topics we discussed in the previous section: SIGHORSE was proposed as "what if we ran something like Commit Overflow but in the summer and with a focus on whimsy and silliness?" Our tenets would be:
 - encourage people to build cool things over the summer!
 - talk about said things!
 - get those things to a presentable state so we could put them in the journal!
@@ -204,13 +211,17 @@ Finally, we can unify the two topics we discussed in the previous section: "what
 To give an idea of the things SIGHORSE would cover, the following diagram was produced:
 
 #figure()[
-  #image("sighorse-vs-all-other-conferences.svg", height: 30%)
+  #image("sighorse-vs-all-other-conferences.svg")
 ]
+
+Because if there's anything that helps people understand things, it's magic quadrants. Simply put, SIGHORSE was to be inclusive.
+
+(Before you ask, someone did measure the size of the horses and found it to be around 8.7#sym.times larger than the "every other scientific journal" cloud.)
 
 == Enough about SIGHORSE, what about the cover?
 I'm so glad you asked about the cover! I first learned Blender#footnote[3D modeling software: https://www.blender.org/], then Krita#footnote[Vector/Raster painting software: https://krita.org/en/], then Inkscape#footnote[Raster drawing software: https://inkscape.org/], and then finally handed it off to an artist to finish because I sure couldn't.
 
-#figure(caption: [counterclockwise: first Blender draft, alternate Blender draft, Krita draft], numbering: none)[
+#figure(caption: [counterclockwise: first Blender draft, alternate Blender draft, Krita draft. \ You can find the final version by looking at the cover.], numbering: none)[
   #grid(
     columns: (.94fr, 1fr),
     image("covers/blender-storm.png"),

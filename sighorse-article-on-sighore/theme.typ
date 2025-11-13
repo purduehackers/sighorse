@@ -76,34 +76,34 @@
 
   set par(leading: 6pt, justify: true)
 
-  set page(
-    footer: context {
-      let rendered-date = {
-        // Use current date if no date is provided
-        let date-format = "[month repr:long] [day padding:none], [year]"
-        if date == auto {
-          datetime.today().display(date-format)
-        } else if type(date) == datetime {
-          date.display(date-format)
-        } else {
-          date
-        }
-      } // rendered-date
+  // set page(
+  //   footer: context {
+  //     let rendered-date = {
+  //       // Use current date if no date is provided
+  //       let date-format = "[month repr:long] [day padding:none], [year]"
+  //       if date == auto {
+  //         datetime.today().display(date-format)
+  //       } else if type(date) == datetime {
+  //         date.display(date-format)
+  //       } else {
+  //         date
+  //       }
+  //     } // rendered-date
 
-      let page-number = {
-        counter(page).display()
-      }
+  //     let page-number = {
+  //       counter(page).display()
+  //     }
 
-      set text(8pt, rgb(137, 137, 137))
-      grid(
-        columns: (1fr, 1fr, 1fr),
-        grid.cell(align: left, rendered-date),
-        grid.cell(align: center, copyright),
-        grid.cell(align: right, page-number),
-      )
+  //     set text(8pt, rgb(137, 137, 137))
+  //     grid(
+  //       columns: (1fr, 1fr, 1fr),
+  //       grid.cell(align: left, rendered-date),
+  //       grid.cell(align: center, copyright),
+  //       grid.cell(align: right, page-number),
+  //     )
 
-    } // footer
-  )
+  //   } // footer
+  // )
 
   show heading: it2 => {
     let level = if it2.level >= heading-params.len() {
