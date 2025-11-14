@@ -23,13 +23,13 @@
 
 #let small-font-size = 8pt
 
-#title[Foreword / an empirical lower-bound on the number of pages you can spend talking about SIGHORSE in SIGHORSE][Kart]
+#title[Foreword][Kart]
 
 Hi! I'm Kart. I came up with SIGHORSE, made the website, and (sometimes) reviewed submissions from authors. I was, of course, helped immeasurably by many people without whom SIGHORSE would not be possible, but ideally you've already seen their names before this article.
 
 I'd like to talk about SIGHORSE for a bit.
 
-There are three parts to this piece:
+There are three parts to this foreword:
 1. Why the word "horse"? Why is it relevant? What does it mean to Purdue Hackers?
 2. Why work on this journal? What forces made us want to create SIGHORSE?
 3. Can we see the process of making the cover? Surely it wasn't too much work.
