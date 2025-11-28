@@ -916,6 +916,12 @@
       color: white;
     }
 
+    .disclaimer-bar.post-deadline a {
+      color: #5b4138;
+      text-decoration: underline;
+    }
+
+
     /* Adjust body padding to account for fixed disclaimer bar */
     body {
       padding-top: 60px;
@@ -923,9 +929,8 @@
   </style>
 </head>
 <body>
-  <!-- Disclaimer Bar -->
-  <div class="disclaimer-bar" id="disclaimer-bar">
-    <span id="disclaimer-text">SIGHORSE submissions due on August 25. Note that the deadline is flexible and may be adjusted on a case-by-case basis.</span>
+  <div class="disclaimer-bar post-deadline">
+    SIGHORSE is finished, and will be first showcased to the world at <a href="https://spill.purduehackers.com" target="_blank" rel="noopener noreferrer">SPILL</a> on December 6, 2025. We'll make the web version of the book available a few days after that!
   </div>
 
   <div class="page-container no-generic-tilt">
@@ -1467,38 +1472,6 @@
     // Initialize
     updateTargetRotation();
     animate();
-
-    // ===== DISCLAIMER BAR LOGIC =====
-    function updateDisclaimerBar() {
-      const disclaimerBar = document.getElementById('disclaimer-bar');
-      const disclaimerText = document.getElementById('disclaimer-text');
-      
-      if (!disclaimerBar || !disclaimerText) return;
-      
-      // Current date
-      const today = new Date();
-      // Deadline date (August 25, 2025)
-      const deadline = new Date(2025, 7, 25); // Month is 0-indexed, so 7 = August
-      
-      if (today > deadline) {
-        // After August 25, 2025
-        disclaimerText.textContent = "SIGHORSE submissions were due on August 25, and are being edited and reviewed right now.";
-        disclaimerBar.classList.add('post-deadline');
-      } else {
-        // Before or on August 25, 2025
-        disclaimerText.textContent = "SIGHORSE submissions due on August 25. Note that the deadline is flexible and may be adjusted on a case-by-case basis.";
-        disclaimerBar.classList.remove('post-deadline');
-      }
-    }
-
-    // Update disclaimer on page load
-    document.addEventListener('DOMContentLoaded', updateDisclaimerBar);
-    // Also update immediately if DOM is already loaded
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', updateDisclaimerBar);
-    } else {
-      updateDisclaimerBar();
-    }
 
   </script>
 </body>
