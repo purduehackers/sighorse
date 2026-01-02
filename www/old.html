@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGHORSE🦓 2025</title>
+
+  <meta property="og:title" content="SIGHORSE🦓 2025">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="SIGHORSE (the Special Interest Group in Horsing Around) is a 8.7× better journal than all the other journals out there.">
+  <meta property="og:image" content="https://sig.horse/opengraph.png">
+  <meta property="og:image:url" content="https://sig.horse/opengraph.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="SIGHORSE name/logo in front of a 3-D zebra floating in space">
+  <meta property="og:url" content="https://sig.horse">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:determiner" content="">
+
+  <!-- Loading p5.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --main-bg-color: #f5f1e8;
+      --section-bg-color: rgba(255, 255, 255, 0.95);
+      --border-color: #e6d7c3;
+      --text-color: #2c2c2c;
+      --box-shadow: 0 4px 8px rgba(0,0,0,0.08), 0 0 0 2px #e6d7c3;
+      --border-radius: 8px;
+      --section-padding: 2rem;
+      --section-margin: 1rem;
+      --text-shadow: 0px 0px 8px white, 0px 0px 4px white, 0px 0px 2px white;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --main-bg-color: #272621;
+        --section-bg-color: rgba(40, 40, 40, 0.95);
+        --border-color: #444;
+        --text-color: #e6e6e6;
+        --box-shadow: 0 4px 8px rgba(0,0,0,0.5), 0 0 0 2px #444;
+        --text-shadow: 0px 0px 8px var(--section-bg-color), 0px 0px 4px var(--section-bg-color), 0px 0px 2px var(--section-bg-color);
+      }
+
+      a {
+        color: #4da6ff; /* Bright blue for better legibility in dark mode */
+      }
+
+      a:hover {
+        color: #66ccff; /* Slightly lighter blue on hover */
+      }
+
+      /* Invert all creatura images for dark mode */
+      .creatura-image,
+      .shipping-section::before,
+      .creatures-gallery::before,
+      .page-container::before,
+      .fig {
+        filter: invert(1);
+      }
+    }
+
+    /* ===== FONTS ===== */
+    @font-face {
+      font-family: 'Libre Caslon';
+      src: url('libre-caslon-condensed/fonts/webfonts/LibreCaslonCondensed-Regular.woff2') format('woff2');
+      font-weight: normal;
+    }
+
+    @font-face {
+      font-family: 'Libre Caslon';
+      src: url('libre-caslon-condensed/fonts/webfonts/LibreCaslonCondensed-Bold.woff2') format('woff2');
+      font-weight: bold;
+    }
+
+    @font-face {
+      font-family: 'Libre Caslon';
+      src: url('libre-caslon-condensed/fonts/webfonts/LibreCaslonCondensed-SemiBold.woff2') format('woff2');
+      font-weight: 600;
+    }
+
+    /* ===== RESET & BASE STYLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      background-color: var(--main-bg-color);
+      position: relative;
+      color: var(--text-color);
+    }
+
+    /* ===== BACKGROUND CREATURES ===== */
+    .page-container {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Animations for this are in reduced-motion: no-preference media query below */
+    .page-container::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url('creatura_3_transparent.png');
+      background-repeat: repeat;
+      background-size: 240px;
+      opacity: 0.15;
+    }
+
+    @keyframes floating-creatures {
+      0% { background-position: 0 0; }
+      100% { background-position: 240px 240px; }
+    }
+
+    /* ===== GLOBAL EFFECTS ===== */
+    /* Slight rotation applied to most text elements for playful effect */
+    h1, h2, h3, h4, h5, h6, p, li,
+    div:not(.no-generic-tilt),
+    span:not(.letter),
+    .time-number, .time-label, .counter-title, .caption {
+      transform: rotate(0.25deg);
+    }
+
+    /* Serious section maintains straight alignment */
+    .serious-section,
+    .serious-section * {
+      transform: rotate(0deg) !important;
+    }
+
+    div.serious-section {
+      border: 4px solid black;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes letterFloat {
+      0%, 100% { transform: translateY(var(--base-y, 0)); }
+      50% { transform: translateY(calc(var(--base-y, 0px) + 10px)); }
+    }
+
+    /* ===== HERO SECTION ===== */
+    .intro-section {
+      position: relative;
+      min-height: 400px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    #p5-canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .title {
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      font-weight: bold;
+      line-height: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .title .letter {
+      display: inline-block;
+      animation: letterFloat 3s ease-in-out infinite;
+    }
+
+    .year {
+      font-size: clamp(1.7rem, 5vw, 5rem);
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .page-container::before {
+          animation: floating-creatures 40s infinite linear;
+          transform: rotate(var(--bg-rotation, 0deg));
+      }
+
+      .title .letter {
+        --base-y: 0px;
+      }
+      .title .letter:nth-child(odd) {
+        --base-y: -4px;
+        animation-delay: calc(var(--n, 1) * 0.15s);
+      }
+      .title .letter:nth-child(even) {
+        --base-y: 4px;
+        animation-delay: calc(var(--n, 1) * 0.2s);
+      }
+      /* Set individual n values */
+      .title .letter:nth-child(1) { --n: 0; }
+      .title .letter:nth-child(2) { --n: 3.5; }
+      .title .letter:nth-child(3) { --n: 2; }
+      .title .letter:nth-child(4) { --n: 1; }
+      .title .letter:nth-child(5) { --n: 1; }
+      .title .letter:nth-child(6) { --n: 4; }
+      .title .letter:nth-child(7) { --n: 3; }
+      .title .letter:nth-child(8) { --n: 0.5; }
+      .title .letter:nth-child(9) { --n: 1.5; }
+    }
+
+    /* Respect accessibility preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .title .letter {
+        animation: none;
+        transform: none;
+      }
+    }
+
+    /* ===== LAYOUT ===== */
+    .main-content {
+      background-color: transparent;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh; /* Ensure main content uses at least full viewport height */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2rem 5% 0 5%;
+      max-width: 1800px;
+      margin: 0 auto;
+      flex: 0 1 auto;
+    }
+
+    /* Mobile-first: sections stack vertically in specified order */
+    .intro-section { order: 1; }
+    .what-section { order: 2; }
+    .faq-section { order: 3; }
+    .serious-section { order: 4; }
+    .submission-section { order: 5; }
+
+    /* Columns are hidden on mobile via display: contents */
+    .column {
+      display: contents;
+    }
+
+    /* ===== CONTENT SECTIONS ===== */
+    .section {
+      background: var(--section-bg-color);
+      padding: var(--section-padding);
+      margin-top: var(--section-margin);
+      margin-bottom: var(--section-margin);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+      font-size: 1.4rem;
+      backdrop-filter: blur(2px);
+    }
+
+    .section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: var(--text-color);
+      font-weight: bold;
+    }
+
+    .section h3 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    .section p {
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+    }
+
+    .section ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 2rem;
+    }
+
+    .section li {
+      line-height: 1.5;
+      margin-bottom: 0.8rem;
+      padding-left: 1.7rem;
+      position: relative;
+    }
+
+    /* Custom horse emoji bullet points */
+    .section li::before {
+      content: "🐴";
+      position: absolute;
+      left: -5px;
+      top: 0;
+    }
+
+    /* ===== IMAGES & MEDIA ===== */
+    .svg-container {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .svg-container img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .caption {
+      font-style: italic;
+      color: #999;
+      margin-top: 1rem;
+    }
+
+    /* ===== COUNTDOWN SECTION ===== */
+    .counter-section {
+      background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      margin-bottom: -0.5rem;
+    }
+
+    .counter-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    /* ===== SUBMISSION COMPONENTS ===== */
+    .submission-box {
+      background: var(--section-bg-color);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      border: 1px solid var(--border-color);
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    /* Dithered background pattern using CSS variables */
+    .submission-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 25% 25%, var(--dither-color, transparent) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, var(--dither-color, transparent) 1px, transparent 1px),
+        radial-gradient(circle at 25% 75%, var(--dither-color, transparent) 0.5px, transparent 0.5px),
+        radial-gradient(circle at 75% 25%, var(--dither-color, transparent) 0.5px, transparent 0.5px),
+        var(--section-bg-color);
+      background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
+      background-position: 0 0, 4px 4px, 0 0, 2px 2px;
+      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 15% 98%, 30% 90%, 55% 70%, 75% 35%, 90% 8%);
+      z-index: 0;
+    }
+
+    /* Setting dither colors for different submissions */
+    .submission-box[href*="NAND"] {
+      --dither-color: #d3caba;
+    }
+
+    .submission-box[href*="keymashed"] {
+      --dither-color: #d32d34;
+    }
+
+    .submission-box[id="pants"] {
+      --dither-color: #cdb9a1;
+    }
+
+    .submission-box[id="ti-wordle"] {
+      --dither-color: rgb(118 169 102);
+    }
+
+    /* Ensure content appears above the dithered background */
+    .submission-content {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+      text-shadow: var(--text-shadow);
+    }
+
+    .submission-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .submission-author {
+      font-size: 1.1rem;
+      color: var(--text-color);
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    .submission-author::before {
+      content: "by ";
+      font-style: normal;
+      color: #999;
+    }
+
+    /* Interactive submission links */
+    .clickable-submission {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .clickable-submission:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-color: #d4c5a8;
+    }
+
+    .clickable-submission:active {
+      transform: translateY(0);
+    }
+
+    .submission-text {
+      flex: 1;
+      min-width: 0;
+      padding-right: 0.5rem;
+    }
+
+    .submission-logo {
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    .submission-logo-img {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      transform: rotate(0deg);
+      background-color: #2c2c2c;
+      color: #ccc;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .footer a {
+      color: var(--border-color);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== DISCORD BUTTON ===== */
+    .discord-button-container {
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+
+    .discord-button {
+      display: inline-flex;
+      align-items: center;
+      background: #5865F2;
+      color: white;
+      font-size: 2.3rem;
+      font-weight: 600;
+      padding: 2.5rem 3rem;
+      border-radius: var(--border-radius);
+      transition: all 1s ease;
+      border: 2px solid rgba(255,255,255,0.2);
+      overflow: hidden;
+      max-width: 100%;
+      box-sizing: border-box;
+      word-wrap: break-word;
+      text-decoration: none;
+    }
+
+    .discord-button:hover {
+      animation: rotateText 1s infinite;
+      color: white;
+    }
+
+    @keyframes rotateText {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(15deg); }
+      75% { transform: rotate(-15deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .discord-button:active {
+      transform: translateY(0) rotate(-0.5deg);
+      box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+    }
+
+    .discord-icon {
+      height: 1em;
+      width: auto;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .discord-text {
+      display: inline-block;
+      line-height: 1;
+    }
+
+    /* ===== SUBMISSION GRID LAYOUT ===== */
+    .submission-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    /* ===== SHIPPING SECTION STYLES ===== */
+    .shipping-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .shipping-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shipping-section::before{
+      content: '';
+      position: absolute;
+      inset: 0;                    /* stretch over the whole section */
+      background-image: url('creatura_2_transparent.png');
+      background-repeat: repeat;   /* tile it */
+      background-size: 120px;      /* pick a tile size */
+      opacity: .5;
+      pointer-events: none;        /* keep clicks working */
+      z-index: 0;                  /* stay behind the content */
+    }
+
+    .shipping-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Add text shadow for better readability */
+    .shipping-section h2,
+    .shipping-section p,
+    .shipping-section code {
+      text-shadow: var(--text-shadow);
+    }
+
+    .shipping-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .shipping-card {
+      background: var(--section-bg-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      border: 1px solid var(--border-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .shipping-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      gap: 0.75rem;
+    }
+
+    .shipping-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .shipping-user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .shipping-username {
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+
+    .shipping-timestamp {
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    .shipping-content p {
+      margin: 0 0 1rem 0;
+    }
+
+    .shipping-image {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      object-fit: cover;
+    }
+
+    /* Full-width section container for submissions */
+    .full-width-section {
+      width: 100%;
+      max-width: 1800px;
+      margin: 0 auto;
+      padding: 0rem 5%;
+    }
+
+    /* ===== WHY SECTION STYLES ===== */
+    .why-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .why-content {
+      flex: 1;
+    }
+
+    .why-image {
+      display: none; /* Hidden by default on small screens */
+    }
+
+    .creatura-link {
+      display: block;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .creatura-image {
+      max-width: 100%;
+      height: auto;
+      transform: rotate(3deg);
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .creatura-link:hover .creatura-image {
+      transform: rotate(6deg) scale(1.05);
+    }
+
+    /* ===== CREATURES GALLERY ===== */
+    .creatures-gallery {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: auto;
+      order: 6;
+      position: relative;
+      overflow: hidden;
+      min-height: 120px;
+    }
+
+    .creatures-gallery::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        url('creatura_1_transparent.png'),
+        url('creatura_2_transparent.png'),
+        url('creatura_3_transparent.png');
+      background-size:
+        80px auto,
+        100px auto,
+        90px auto;
+      background-position:
+        10% 20%,
+        50% 60%,
+        90% 30%;
+      background-repeat: repeat-y;
+      opacity: 0.85;
+      z-index: 1;
+    }
+
+    /* Hide the gallery when it's too small */
+    .hide-gallery {
+      display: none !important;
+    }
+
+    /* ===== MEDIA QUERIES (CONSOLIDATED) ===== */
+    @media (max-width: 480px) {
+      .discord-button {
+        font-size: 2rem;
+        padding: 2rem 2.5rem;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .section {
+        font-size: 1.2rem;
+        padding: 1.5rem;
+      }
+
+      .section h2 {
+        font-size: 2rem !important;
+      }
+
+      .section h3 {
+        font-size: 1.7rem !important;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .submission-content {
+        flex-direction: column;
+      }
+
+      .submission-text {
+        padding-right: 0;
+        width: 100%;
+      }
+
+      .submission-logo {
+        align-self: flex-start;
+        margin-top: 0.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .creatures-gallery {
+        flex: 1 1 0px;
+        min-height: 120px;
+      }
+
+      .creatures-gallery::before {
+        background-size:
+          70px auto,
+          80px auto,
+          75px auto;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .content-grid {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+      }
+
+      .column:first-child,
+      .column:last-child {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .faq-section,
+      .what-section {
+        flex: 0 0 auto;
+      }
+
+      .creatures-gallery {
+        margin-bottom: auto;
+      }
+
+      .submission-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .shipping-grid {
+        opacity: 0.9;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      .what-section {
+        flex: 0 0 auto;
+      }
+
+      .creatures-gallery {
+        flex: 1 1 0px;
+        min-height: 120px;
+      }
+
+      .column:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .why-container {
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .why-image {
+        display: block;
+        flex: 0 0 auto;
+        width: 250px;
+      }
+    }
+
+    @media (min-width: 1440px) {
+      .why-container {
+        justify-content: space-between;
+        max-width: 1700px;
+      }
+
+      .why-image {
+        margin: 0 auto;
+      }
+    }
+
+    /* Additional styles for card rotations */
+    .card-1 {
+      transform: rotate(-1deg);
+    }
+
+    .card-2 {
+      transform: rotate(-1.2deg);
+    }
+
+    .card-3 {
+      transform: rotate(1.6deg);
+    }
+
+    .card-4 {
+      transform: rotate(0.1deg);
+    }
+    /* ===== DISCLAIMER BAR STYLES ===== */
+    .disclaimer-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #ffcc02, #ffa500);
+      color: #2c2c2c;
+      padding: 12px 20px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 1000;
+      transform: rotate(0deg);
+      border-bottom: 2px solid #e6d7c3;
+    }
+
+    .disclaimer-bar.post-deadline {
+      background: linear-gradient(135deg, #4a90e2, #357abd);
+      color: white;
+    }
+
+    .disclaimer-bar.post-deadline a {
+      color: #5b4138;
+      text-decoration: underline;
+    }
+
+
+    /* Adjust body padding to account for fixed disclaimer bar */
+    body {
+      padding-top: 60px;
+    }
+  </style>
+</head>
+<body>
+  <div class="disclaimer-bar post-deadline">
+    SIGHORSE is finished. <a href="book.pdf" target="_blank" rel="noopener noreferrer">CLICK HERE FOR THE PDF!</a> It was first showcased to the world at <a href="https://spill.purduehackers.com" target="_blank" rel="noopener noreferrer">SPILL</a> on December 6, 2025.
+  </div>
+
+  <div class="page-container no-generic-tilt">
+    <!-- Main Content -->
+    <div class="main-content no-generic-tilt">
+      <div class="content-grid no-generic-tilt">
+      <!-- Column 1: Section 1 (zebra animation), Section 3 (FAQ), Section 4 (Serious Submissions) -->
+      <div class="column">
+        <!-- Section 1: Hero with p5.js canvas background -->
+        <div class="intro-section">
+        <div id="p5-canvas-container" class="no-generic-tilt"></div>
+        <div class="hero-content">
+          <h1 class="title">
+          <span class="letter">S</span><span class="letter">I</span><span class="letter">G</span><span class="letter">H</span><span class="letter">O</span><span class="letter">R</span><span class="letter">S</span><span class="letter">E</span><span class="letter">🦓</span>
+          </h1>
+          <div class="year">2025</div>
+        </div>
+        </div>
+
+        <!-- Section 3: FAQ -->
+        <div class="section faq-section">
+        <h2>FAQ</h2>
+        <p><strong>Q: What counts as a project?</strong><br>
+        A: Anything you're genuinely excited about creating or exploring!
+        It could be building something, learning a new skill, researching a topic, or crafting something unique.</p>
+
+        <p><strong>Q: What form should my updates take?</strong><br>
+        A: Share your progress in any format you prefer! The more tangible it is to other people, the better.
+        A git commit, a photo of your on-going work, or a micro blog post.</p>
+
+        <p><strong>Q: What makes a good record?</strong><br>
+        A: A record should capture and share your project in a way that others can access, appreciate, and learn from.
+        Examples include demo videos, research papers, detailed writeups, interactive demos, or snazzy show-reels.</p>
+
+        <p><strong>Q: How many projects am I allowed to have?</strong><br>
+        A: <s>No more than three &mdash; don't be greedy.</s> As many as you want.</p>
+
+
+        <p><strong>Q: Do my project and record have to be distinct?</strong><br>
+        A: Not necessarily. For example, writing a research paper serves as both the project and the record.</p>
+        </div>
+
+        <!-- Section 4: SIGHORSE invites serious submissions -->
+        <div class="section serious-section">
+        <h2>SIGHORSE invites serious submissions</h2>
+        <p>While this website is playful, <b>serious projects presented seriously <i>are</i> welcome</b> at SIGHORSE. We want you to have fun, grow, and present your best work.</p>
+        </div>
+      </div>
+
+      <!-- Column 2: Section 2 (What?!) only -->
+      <div class="column">
+        <!-- Section 2: What?! -->
+        <div class="section what-section">
+        <h2>What?!</h2>
+        <p>SIGHORSE (the Special Interest Group in Horsing Around) is a 8.7× better journal than all the other journals out there.
+          This summer, work on projects like learning to make killer pizza, writing a GPU driver, or pushing the frontiers of Rubik's cube theory.
+          Then, create a record of your project &mdash; a demo video, research paper, or detailed writeup &mdash; for inclusion in SIGHORSE🦓 2025.</p>
+
+        <h3>The six easy steps to SIGHORSE</h3>
+        <ul>
+          <li>Join the <a href="https://puhack.horse/discord" target="_blank" rel="noopener noreferrer">Purdue Hackers Discord</a>.</li>
+          <li>Create a thread in <code>#&NoBreak;SIGHORSE&NoBreak;🦓</code> with your name as the title.</li>
+          <li>Make incremental progress on your project and share updates in your personal thread!</li>
+          <li>Every week, post an update (demo, commits, photos, etc.) to <code>#&NoBreak;🏁&NoBreak;checkpoints</code>!</li>
+          <li><b>Create and share a digitally archivable record</b> for inclusion in SIGHORSE!
+            A record can be anything that showcases your project and can be saved for posterity.</li>
+          <li>Incessantly cite your publication in the SIGHORSE 2025 journal, publishing in September!</li>
+        </ul>
+
+        <div class="svg-container">
+          <img class="fig" src="sighorse-vs-all-other-conferences.svg" alt="SIGHORSE vs All Other Conferences Comparison Chart">
+          <div class="caption">Fig. 1</div>
+        </div>
+        </div>
+
+        <!-- Section 6. Creatures Gallery -->
+        <div class="section creatures-gallery" id="creatures-gallery">
+          <!-- No explicit content needed - using ::before pseudoelement -->
+        </div>
+      </div>
+      </div>
+
+      <!-- Section 5: Example SIGHORSE Adventures (Full Width) -->
+      <div class="full-width-section">
+        <div class="section submission-section">
+          <h2>Things that would've been SIGHORSE projects had it existed before (Examples)</h2>
+          <div class="submission-grid">
+            <a href="https://github.com/ArhanChaudhary/NAND" target="_blank" rel="noopener noreferrer" class="submission-box clickable-submission">
+              <div class="submission-content">
+                <div class="submission-text">
+                  <h3 class="submission-title">Not A Nand-powered Device</h3>
+                  <p class="submission-author">Arhan Chaudhary</p>
+                </div>
+                <div class="submission-logo">
+                  <img src="NAND-logo.png" alt="NAND Logo" class="submission-logo-img">
+                </div>
+              </div>
+            </a>
+            <a href="cynthia-cropped-pants.png" class="submission-box clickable-submission" id="pants">
+              <div class="submission-content">
+                <div class="submission-text">
+                  <h3 class="submission-title">Pants stitched with hands</h3>
+                  <p class="submission-author">Cynthia Clementine</p>
+                </div>
+                <div class="submission-logo">
+                  <img src="cynthia-cropped-pants.png" alt="A Pair of Brown Pants" class="submission-logo-img">
+                </div>
+              </div>
+            </a>
+            <a href="https://github.com/kdkasad/ti-wordle" target="_blank" rel="noopener noreferrer" class="submission-box clickable-submission" id="ti-wordle">
+              <div class="submission-content">
+                <div class="submission-text">
+                  <h3 class="submission-title">TI Wordle</h3>
+                  <p class="submission-author">Kian Kasad</p>
+                </div>
+                <div class="submission-logo">
+                  <img src="ti-wordle.apng" alt="TI Wordle Logo" class="submission-logo-img">
+                </div>
+              </div>
+            </a>
+            <a href="https://github.com/kartva/keymashed" target="_blank" rel="noopener noreferrer" class="submission-box clickable-submission">
+              <div class="submission-content">
+                <div class="submission-text">
+                  <h3 class="submission-title">Keymashed: Mash! your keyboard to make your internet better</h3>
+                  <p class="submission-author">Kartavya Vashishtha</p>
+                </div>
+                <div class="submission-logo">
+                  <img src="keymashed-logo.jpg" alt="Keymashed Logo" class="submission-logo-img">
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Why should you do this?! -->
+      <div class="full-width-section">
+        <div class="section why-section">
+          <h2>Why should you do this?!</h2>
+          <div class="why-container">
+            <div class="why-content">
+              <ul>
+                <li>Studies I dreamed up show that <b>building with other people</b> is 300% more fun.</b></li>
+                <li>Tell your coworkers and friends about SIGHORSE and watch them turn green with envy! HORSE <i>with</i> your friends for triple the fun!</li>
+                <li>
+                  <a href="https://events.purduehackers.com/ama-with-steve-wozniak">Purdue</a>
+                  <a href="https://blog.purduehackers.com/posts/sign/">Hackers</a>
+                  <a href="https://www.instagram.com/p/DHuV4ZkNmZb/">is</a>
+                  <a href="https://burst.purduehackers.com/">awesome</a>.
+                  Become the awesome this summer.
+                </li>
+                <li>Earn badges (proven* to increase happiness)</li>
+              </ul>
+              <p class="footnote">* side-effects include wanting to get more badges.</p>
+            </div>
+            <div class="why-image">
+              <a href="https://www.instagram.com/p/DHoiJrwS2cm/?img_index=1" target="_blank" rel="noopener noreferrer" class="creatura-link">
+                <img src="creatura_1_transparent.png" alt="Mythical creature illustration" class="creatura-image">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: What's #shipping?! -->
+      <div class="full-width-section">
+        <div class="section shipping-section">
+          <h2>All aboard the <code>#&NoBreak;🚢&NoBreak;ship</code>!</h2>
+          <p>Whenever a HORSEr makes meaningful progress on their adventure, they post it in the <code>#&NoBreak;🚢&NoBreak;ship</code> channel. These are some notable ships:</p>
+          <div class="shipping-grid no-generic-tilt">
+            <div class="shipping-column">
+              <div class="shipping-card no-generic-tilt card-1">
+                <div class="shipping-header">
+                  <img src="static/ship-images/2ca46b5853fbdc245c547efe876cf25e.webp" alt="Profile" class="shipping-avatar">
+                  <div class="shipping-user-info">
+                    <span class="shipping-username">fizzyapple12</span>
+                    <span class="shipping-timestamp">Tuesday, December 10, 2024 at 11:39 PM</span>
+                  </div>
+                </div>
+                <div class="shipping-content">
+                  <p>First program on the eBay-bought-then-repaired robot arm</p>
+                  <img src="static/ship-images/fizzy-robot-arm.gif" alt="robot arm moving around" class="shipping-image">
+                </div>
+              </div>
+
+              <div class="shipping-card no-generic-tilt card-2">
+                <div class="shipping-header">
+                  <img src="static/ship-images/3fa265211f9a56d23b99c52eab6468ee.webp" alt="Profile" class="shipping-avatar">
+                  <div class="shipping-user-info">
+                    <span class="shipping-username">𝕬ydenGPT</span>
+                    <span class="shipping-timestamp">Thursday, December 26, 2024 at 5:07 PM</span>
+                  </div>
+                </div>
+                <div class="shipping-content">
+                  <p>COMMIT: Abacus. Uses magnets to hold the beads in place.</p>
+                  <img src="static/ship-images/PXL_20241227_010257969.MP.jpg" alt="Abacus held in hand" class="shipping-image" />
+                </div>
+              </div>
+            </div>
+
+            <div class="shipping-column">
+              <div class="shipping-card no-generic-tilt card-3">
+                <div class="shipping-header">
+                  <img src="static/ship-images/89c59de97fdb5f90999d86fed01f23fe.webp" alt="Profile" class="shipping-avatar">
+                  <div class="shipping-user-info">
+                    <span class="shipping-username">Lillith ᓚᘏᗢ (INX)</span>
+                    <span class="shipping-timestamp">Monday, January 13, 2025 at 10:05 PM</span>
+                  </div>
+                </div>
+                <div class="shipping-content">
+                  <p>Setup my optiplex to expose my receipt printer over tailscale, and make a quick script to print a todo list :)</p>
+                  <img src="static/ship-images/rn_image_picker_lib_temp_98dd3471-1e3e-4f6e-b122-efc9ca69fdbf.jpg" alt="Printed to-do list receipt" class="shipping-image">
+                </div>
+              </div>
+
+              <div class="shipping-card no-generic-tilt card-4">
+                <div class="shipping-header">
+                  <img src="static/ship-images/279153c7dc2e3bc00e0ada73c099ce5c.webp" alt="Profile" class="shipping-avatar">
+                  <div class="shipping-user-info">
+                    <span class="shipping-username">DitrusNight</span>
+                    <span class="shipping-timestamp">Saturday, March 22, 2025 at 4:55 PM</span>
+                  </div>
+                </div>
+                <div class="shipping-content">
+                  <p>Apartment shopping and I wanted to know which apartments that were available have good Internet…. So I got the Zillow json data, put it through the FCC’s api, and made a color coded map based on ISP fiber availability</p>
+                  <img src="static/ship-images/IMG_1794.jpg" alt="Digital map with markers for apartment locations and a popup showing details of the selected apartment" class="shipping-image">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown Section -->
+      <div class="counter-section">
+      <h2 class="counter-title">Start sharing your progress! <!--(officially) in:--></h2>
+
+      <!-- Discord Button -->
+      <div class="discord-button-container">
+        <a href="https://puhack.horse/discord" target="_blank" rel="noopener noreferrer" class="discord-button">
+          <svg class="discord-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" fill="#fff"/></svg>
+          <span class="discord-text">Join our Discord to start!</span>
+        </a>
+      </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      3D Zebra model: <a href="https://skfb.ly/oI7GO" target="_blank" rel="noopener">"Zebra"</a> by LilEbo is licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution</a>.
+    </footer>
+  </div>
+
+  <script>
+    let angle = 0;
+    let speed = 0.04;
+    let t = 0;
+
+    let camY = 0;
+    let targetCamY = 150;
+    let tiltAngle = 0;
+    let timeSinceSwoop = 0;
+
+    // Variables for day/night cycle
+    let isNight = false;
+    let currentHour = 12;
+    let stars = [];
+
+    // Reduced motion support
+    let prefersReducedMotion = false;
+    let fixedTimeStep = 0;
+    let fixedAngle = 0;
+    let fixedCamY = 0;
+
+    /*
+    "Zebra" (https://skfb.ly/oI7GO) by LilEbo is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+    */
+
+    let zebra;
+    let zebraTexture;
+
+    function preload() {
+      zebraTexture = loadImage('Zebra_BaseColor.png');
+      zebra = loadModel('Zebra.obj', true);
+    }
+
+    function setup() {
+      // Detect reduced motion preference
+      prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // If reduced motion is preferred, use fixed random values
+      if (prefersReducedMotion) {
+        fixedTimeStep = random(0, TWO_PI);
+        fixedAngle = random(0, TWO_PI);
+        fixedCamY = random(-100, 300);
+      }
+
+      // Create canvas sized to fit the hero section container
+      let container = document.getElementById('p5-canvas-container');
+        let canvas = createCanvas(container.offsetWidth, container.offsetHeight, WEBGL);
+        canvas.parent('p5-canvas-container');
+
+      // Create stars (only visible at night)
+      for (let i = 0; i < 200; i++) {
+        stars.push({
+          x: random(-1, 1),
+          y: random(-1, 1),
+          z: random(-1, 1),
+          size: random(1, 3)
+        });
+      }
+
+      updateCurrentTime();
+
+    }
+
+    function updateCurrentTime() {
+      let now = new Date();
+      currentHour = now.getHours();
+      isNight = (currentHour < 6 || currentHour >= 18);
+    }
+
+    function inSwoop() {
+      return timeSinceSwoop < 3;
+    }
+
+    function shouldStartSwoop() {
+      return timeSinceSwoop > 10 && random() < 0.005;
+    }
+
+    function windowResized() {
+      // Resize canvas to match the hero section
+      let container = document.getElementById('p5-canvas-container');
+      if (container) {
+        resizeCanvas(container.offsetWidth, container.offsetHeight);
+      }
+    }
+
+    function draw() {
+      // Update time every 60 seconds
+      if (frameCount % 60 === 0) {
+        updateCurrentTime();
+      }
+
+
+      background(100);
+      noStroke();
+      drawSkybox();
+
+      // Use fixed time step for reduced motion, otherwise increment normally
+      if (prefersReducedMotion) {
+        t = fixedTimeStep;
+      } else {
+        t += 0.01;
+      }
+
+      // Auto-rotation mode
+      if (prefersReducedMotion) {
+        speed = 0;
+      } else {
+        targetSpeed = 0.01 + 0.03 * sin(t * 0.8);
+        speed = lerp(speed, targetSpeed, 0.05);
+        angle += speed;
+      }
+
+      // Occasionally SWOOP the camera (disable for reduced motion)
+      if (!prefersReducedMotion) {
+        timeSinceSwoop += 0.01;
+        if (shouldStartSwoop()) {
+          timeSinceSwoop = 0;
+        }
+
+        if (inSwoop()) {
+          // Dramatic swooping shot
+          targetCamY = 400 * sin(t * 2);
+        } else {
+          // Normal varied height
+          targetCamY = 150 * sin(t * 0.7 + PI / 4) + 200 * sin(t * 0.3);
+        }
+
+        // Smooth height transitions
+        camY = lerp(camY, targetCamY, 0.03);
+      }
+
+      tiltAngle = map(camY, -300, 300, -PI/11, PI/11);
+
+      let radius = 550 + 100 * sin(t * 1.3);
+      let camX = radius * cos(angle);
+      let camZ = radius * sin(angle);
+
+      // Apply camera with tilt
+      let lookY = 50 * sin(t * 0.5); // Look at varying heights of the zebra
+
+      // Create up vector for tilt effect
+      let upX = sin(tiltAngle) * sin(angle);
+      let upY = cos(tiltAngle);
+      let upZ = sin(tiltAngle) * cos(angle);
+
+      camera(camX, camY, camZ, 0, lookY, 0, upX, upY, upZ);
+
+      // Lights
+      if (isNight) {
+        ambientLight(40);
+      } else {
+        ambientLight(80);
+      }
+      pointLight(255, 255, 255, 0, -300, 0); // Fixed light from above
+
+      pointLight(120, 120, 120, camX, camY, camZ);
+
+      drawZebra();
+    }
+
+    function drawSkybox() {
+      push();
+
+      // Disable skybox rotation for reduced motion
+      if (!prefersReducedMotion) {
+        rotateY(frameCount * 0.0001); // barely visible slow spin
+      }
+
+      // Sky color based on time
+      if (isNight) {
+        fill(10, 10, 40); // night sky (dark blue)
+      } else {
+        fill(100, 170, 250); // day sky (light blue)
+      }
+
+      sphere(2000);
+
+      // Draw stars (only visible at night)
+      if (isNight) {
+        fill(255);
+        for (let star of stars) {
+          push();
+          translate(
+            star.x * 1950,
+            star.y * 1950,
+            star.z * 1950
+          );
+          sphere(star.size);
+          pop();
+        }
+      }
+
+      // Calculate sun/moon position based on current hour
+      let celestialAngle = map(currentHour, 0, 24, PI/2, -3*PI/2);
+      let celestialX = cos(celestialAngle) * 1800;
+      let celestialY = sin(celestialAngle) * 1800;
+
+      push();
+      translate(celestialX, celestialY, 0);
+
+      if (isNight) {
+        // Draw moon
+        fill(220, 220, 200);
+      } else {
+        // Draw sun
+        fill(255, 255, 200);
+      }
+
+      sphere(80);
+      pop();
+
+      pop();
+    }
+
+    function drawZebra() {
+      if (zebra) {
+        push();
+        scale(1.5); // Adjust scale as needed
+
+        // Rotate the zebra (disable for reduced motion)
+        if (!prefersReducedMotion) {
+          rotateY(frameCount * 0.002);
+        }
+
+        rotateX(PI); // Flip the zebra right-side up (rotate 180 degrees on X axis)
+
+        // Apply the texture to the model
+        texture(zebraTexture);
+
+        model(zebra);
+        pop();
+      }
+    }
+
+    // Check gallery height after window loads and on resize
+    window.addEventListener('load', checkGalleryHeight);
+    window.addEventListener('resize', checkGalleryHeight);
+
+    // Function to check if gallery has enough height and hide if not
+    function checkGalleryHeight() {
+      const gallery = document.getElementById('creatures-gallery');
+      if (gallery) {
+        // First ensure the gallery is visible to get a proper height measurement
+        gallery.classList.remove('hide-gallery');
+
+        // Force a reflow to ensure we get the correct height after removing hide-gallery
+        void gallery.offsetHeight;
+
+        // Now get the actual height assigned by the layout engine
+        const galleryHeight = gallery.clientHeight;
+
+        // If less than 120px, hide the gallery
+        if (galleryHeight < 120) {
+          gallery.classList.add('hide-gallery');
+        }
+      }
+    }
+
+    let targetRotation = 0;
+    let currentRotation = 0;
+
+    function updateTargetRotation() {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+      // Map scroll position to rotation (feel free to adjust multiplier)
+      targetRotation = (scrollTop / maxScroll) * 20;
+    }
+
+    function animate() {
+      if (prefersReducedMotion) {
+        // If reduced motion is preferred, skip animation
+        return;
+      }
+
+      // Linear interpolation (lerp)
+      const smoothing = 0.07; // smaller = smoother & slower
+      currentRotation += (targetRotation - currentRotation) * smoothing;
+
+      document.documentElement.style.setProperty('--bg-rotation', `${currentRotation}deg`);
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('scroll', updateTargetRotation);
+
+    // Initialize
+    updateTargetRotation();
+    animate();
+
+  </script>
+</body>
+</html>
