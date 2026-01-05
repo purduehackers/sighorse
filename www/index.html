@@ -146,11 +146,28 @@
         .image-container {
             display: flex;
             gap: 10px;
-            width: 50%;
+            width: 60%;
+            margin: 0 auto;
         }
 
         .image-container img {
+            flex: 1;
+            min-width: 0;
             max-width: 100%;
+            height: auto;
+        }
+
+        figure {
+            margin: 1.5em 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        figcaption {
+            margin-bottom: 0.8em;
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
 
         .page-num { position: absolute; bottom: 15px; left: 20px; font-size: 0.8rem; }
@@ -310,10 +327,53 @@
         <section class="page-content page-shape">
           <div class="title-group">
               <div class="title">BUY A PAPER COPY</div>
-              <div class="image-container">
-                  <img src="progress-1.webp" />
-                  <img src="progress-2.webp" />
+          </div>
+          <div>
+              <div style="font-size: 0.9em;">
+                Due to popular demand, SIGHORSE has a limited print run!
+                Book details:
+                <ul style="font-size: 0.9em;">
+                <li>
+                A5, perfect bound, 80lb matte coated paper.</li>
+                <li>297 pages, out of which 141 are colored.</li>
+                <li>Contains the substring "horse" at least 46 times.</li>
+
+                </ul>
+
+                FAQ:
+                <ul style="font-size: 0.9em;">
+                  <li>
+                Is the print edition different from the online edition? <br>
+                 No. The print edition will be identical to the PDF that is currently online.
+                  </li>
+                  <li>
+                When will I be able to get the books? <br>
+                 Around the first week of February; we'll have a more concrete timeline once this order form closes and we place an order to the printer.
+                  </li>
+                  <li>
+                How will I receive the book? <br>
+                 You can drop by any Hack Night. If that doesn't work, <a href="mailto:phackers@purdue.edu">email us</a> for alternate arrangements, including shipping.
+                  </li>
+                </ul>
+
+                To buy a copy of SIGHORSE, donate <br> <tt style="font-size: 1.2em;">$10 × no. of desired copies</tt> <a href="https://phack.rs/donate-hcb">to Purdue Hackers with this link.</a> <br>
+
+                <b>Make sure to mark the "I'm receiving goods for this donation" option.</b>
               </div>
+
+              <figure>
+                  <figcaption>Photos of the creation of the hand-bound edition</figcaption>
+                  <div class="image-container">
+                      <img src="progress-1.webp" />
+                      <img src="progress-2.webp" />
+                  </div>
+              </figure>
+
+              <footer>
+                  <div style="text-align: left;">
+                    3
+                  </div>
+              </footer>
           </div>
         </section>
     </div>
