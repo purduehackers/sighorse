@@ -47,6 +47,7 @@
 
             padding: 15px;
             pointer-events: none;
+            overflow: hidden;
         }
 
         .scatter {
@@ -172,6 +173,13 @@
 
         .page-num { position: absolute; bottom: 15px; left: 20px; font-size: 0.8rem; }
         sup { font-size: 0.6em; }
+
+        @media (max-width: 600px) {
+            .page-shape {
+                aspect-ratio: auto;
+                min-height: 85vh;
+            }
+        }
     </style>
 </head>
 <body>
@@ -356,7 +364,7 @@
                   </li>
                 </ul>
 
-                To buy a copy of SIGHORSE, donate <br> <tt style="font-size: 1.2em;">$10 × no. of desired copies</tt> <a href="https://phack.rs/donate-hcb">to Purdue Hackers with this link.</a> <br>
+                To buy a copy of SIGHORSE, donate <br> <tt style="font-size: 1.2em;">$10 × no. of desired copies</tt> <a href="https://phack.rs/donate-hcb">to Purdue Hackers on this link.</a> <br>
 
                 <b>Make sure to mark the "I'm receiving goods for this donation" option.</b>
               </div>
