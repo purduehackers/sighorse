@@ -16,12 +16,10 @@
             margin: 0;
             padding: 0;
             width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
             background-color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-family: var(--main-font);
         }
 
@@ -40,7 +38,7 @@
         }
 
         .stage-background {
-            position: absolute;
+            position: fixed;
             inset: 0;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -78,6 +76,19 @@
             pointer-events: none;
         }
 
+        .spread-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            min-height: 100vh;
+            padding: 40px 0;
+            position: relative;
+            z-index: 10;
+        }
+
         .page-content {
             position: relative;
             background: rgba(255, 255, 255, 0.75);
@@ -86,7 +97,6 @@
             display: flex;
             flex-direction: column;
             color: #000;
-            overflow-y: auto;
         }
 
 
@@ -225,62 +235,68 @@
 
     <div class="dim-layer"></div>
 
-    <main class="page-content page-shape">
-        <header>
-            <div>Purdue Hackers<sup>2</sup></div>
-            <br>
-            <div class="indent-1">presents</div>
-            <br>
-            <div class="indent-2">
-                a journal of things done over summer 2025
-                <div class="greyed" style="font-size: 0.9em;">(and sometimes the fall, but we don't talk about that timeline overrun)</div>
-            </div>
-        </header>
-
-        <div class="title-group">
-            <div class="title">SIGHORSE 2025 🦓</div>
-            <a href="book.pdf" class="marquee-btn">
-                <div class="marquee-track">
-                    <span>READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) |&nbsp;</span>
-                    <span>READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) |&nbsp;</span>
-                </div>
-            </a>
-
-            <br>
-            <div>many authors</div>
-            <br>
-            <div style="font-size: 0.75rem;">
-                cover art by Cynthia, Amber, and Kart<br>
-                illustrations by Amber and authors
-            </div>
-            <br>
-            <div>
-                purdue university<br>
-                west lafayette, indiana
-            </div>
-            <br>
-            <div>
-                first presented on December 6, 2025<br>
-                at SPILL<sup>3</sup>
-            </div>
-        </div>
-
-        <footer>
-            <div class="greyed" style="font-size: 0.8rem; text-align: center; margin-bottom: 1em;">
-                <div>thank you, <a href="https://sigbovik.org/" target="_blank">sigbovik</a>, for existing so I could copy the title page and copyright page style off you.</div>
+    <div class="spread-wrapper">
+        <section class="page-content page-shape">
+            <header>
+                <div>Purdue Hackers<sup>2</sup></div>
                 <br>
-                <a href="/old.html">click here for the old sighorse website</a>
+                <div class="indent-1">presents</div>
+                <br>
+                <div class="indent-2">
+                    a journal of things done over summer 2025
+                    <div class="greyed" style="font-size: 0.9em;">(and sometimes the fall, but we don't talk about that timeline overrun)</div>
+                </div>
+            </header>
+
+            <div class="title-group">
+                <div class="title">SIGHORSE 2025 🦓</div>
+                <a href="book.pdf" class="marquee-btn">
+                    <div class="marquee-track">
+                        <span>READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) |&nbsp;</span>
+                        <span>READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) |&nbsp;</span>
+                    </div>
+                </a>
+
+                <br>
+                <div>many authors</div>
+                <br>
+                <div style="font-size: 0.75rem;">
+                    cover art by Cynthia, Amber, and Kart<br>
+                    illustrations by Amber and authors
+                </div>
+                <br>
+                <div>
+                    purdue university<br>
+                    west lafayette, indiana
+                </div>
+                <br>
+                <div>
+                    first presented on December 6, 2025<br>
+                    at SPILL<sup>3</sup>
+                </div>
             </div>
-            <div style="border-top: 1px solid #000; font-size: 0.7rem; padding-top: 0.4em;">
-                <div><sup>2</sup> purduehackers.com</div>
-                <div><sup>3</sup> spill.purduehackers.com</div>
-            </div>
-            <br>
-            <div style="text-align: left;">
-              2
-            </div>
-        </footer>
-    </main>
+
+            <footer>
+                <div class="greyed" style="font-size: 0.8rem; text-align: center; margin-bottom: 1em;">
+                    <div>thank you, <a href="https://sigbovik.org/" target="_blank">sigbovik</a>, for existing so I could copy the title page and copyright page style off you.</div>
+                    <br>
+                    <a href="/old.html">click here for the old sighorse website</a>
+                </div>
+                <div style="border-top: 1px solid #000; font-size: 0.7rem; padding-top: 0.4em;">
+                    <div><sup>2</sup> purduehackers.com</div>
+                    <div><sup>3</sup> spill.purduehackers.com</div>
+                </div>
+                <br>
+                <div style="text-align: left;">
+                  2
+                </div>
+            </footer>
+        </section>
+
+        <section class="page-content page-shape">
+            <!-- Empty Page -->
+        </section>
+    </div>
 
 </body>
 </html>
