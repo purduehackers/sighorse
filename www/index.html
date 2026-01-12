@@ -58,6 +58,7 @@
         .scatter {
             width: 100%;
             height: 100%;
+            max-width: 100%;
             object-fit: cover;
             border: 4px solid white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -84,9 +85,7 @@
         }
 
         .spread-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
+            position: relative;
             pointer-events: none;
             display: flex;
             flex-wrap: wrap;
