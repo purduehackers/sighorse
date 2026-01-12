@@ -152,28 +152,27 @@
         .image-container {
             display: flex;
             gap: 10px;
-            width: 60%;
-            margin: 0 auto;
+            width: 100%;
+            margin: 1em 0;
+            align-items: flex-end;
         }
 
         .image-container img {
-            flex: 1;
-            min-width: 0;
-            max-width: 100%;
-            height: auto;
+            flex: 0 0 auto;
+            height: 11rem;
+            width: auto;
         }
 
         figure {
             margin: 1.5em 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         figcaption {
-            margin-bottom: 0.8em;
+            flex: 1;
             font-size: 0.9rem;
             opacity: 0.8;
+            line-height: 1.1;
+            align-self: flex-start;
         }
 
         .page-num { position: absolute; bottom: 15px; left: 20px; font-size: 0.8rem; }
@@ -357,15 +356,15 @@
                 <ul style="font-size: 0.9em;">
                   <li>
                 Is the print edition different from the online edition? <br>
-                 No. The print edition will be identical to the PDF that is currently online.
+                 No. The print edition will be identical to the online PDF.
                   </li>
                   <li>
                 When will I be able to get the books? <br>
-                 Around the first week of February; we'll have a more concrete timeline once this order form closes and we place an order to the printer.
+                 Around the first week of February.
                   </li>
                   <li>
                 How will I receive the book? <br>
-                 You can drop by any Hack Night. If that doesn't work, you can request shipping (provided you pay for shipping) in your donation message or <a href="mailto:phackers@purdue.edu">by emailing us</a>, and we can figure it out from there.
+                 Come to any <a href="https://events.purduehackers.com/">Hack Night</a>. You can request shipping (provided you pay) in your donation message or <a href="mailto:phackers@purdue.edu">by emailing us</a>, and we can figure it out from there.
                   </li>
                 </ul>
 
@@ -375,8 +374,8 @@
               </div>
 
               <figure>
-                  <figcaption>Photos of the creation of the hand-bound edition</figcaption>
                   <div class="image-container">
+                      <figcaption>Photos of the creation of the hand-bound edition:</figcaption>
                       <img src="progress-1.webp" />
                       <img src="progress-2.webp" />
                   </div>
