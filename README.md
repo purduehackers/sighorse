@@ -8,3 +8,10 @@ embroidered armor) about your adventure, and bask in glory forevermore.
 This repo is somewhat internal in the sense that there hasn't been effort in making it make sense to an uninvolved onlooker.
 
 [site]: https://sig.horse
+
+----
+
+Enable fast web loading on pdf with:
+```
+nix-shell -p qpdf --run "qpdf --check-linearization book.pdf || qpdf --linearize --replace-input book.pdf"
+```
