@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Iosevka Heavy Oblique';
+  src: url('/Iosevka-HeavyOblique.ttf') format('truetype');
+}
+
+:root {
+  --aspect-ratio: 5.8 / 8.3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #e0e0e0;
+  font-family: "Libertinus Serif", "Linux Libertine", serif;
+  position: relative;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 12s linear infinite;
+}
+
+/* Scattered background grid container */
+.scattered-bg {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-auto-rows: 250px;
+  padding: 15px;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.scatter {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  border: 4px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.scatter:hover {
+  transform: scale(2.2) rotate(3deg) !important;
+  z-index: 101;
+  position: relative;
+}
+
+.s-v1 { transform: rotate(-4deg); }
+.s-v2 { transform: rotate(3deg); }
+.s-v3 { transform: rotate(5deg); }
+.s-v4 { transform: rotate(-2deg); }
+
+/* Dim layer */
+.dim-layer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Spread wrapper for content */
+.spread-wrapper {
+  position: relative;
+  pointer-events: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 0;
+  z-index: 2;
+}
+
+/* Page card styling */
+.page-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(3px);
+  width: 92vw;
+  max-width: 500px;
+  height: auto;
+  min-height: 85vh;
+  aspect-ratio: var(--aspect-ratio);
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  pointer-events: auto;
+  padding: 30px 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.page-card header {
+  font-size: 1.05rem;
+}
+
+.page-card .indent-1 { padding-left: 1.5em; }
+.page-card .indent-2 { padding-left: 2.5em; }
+.page-card .greyed { opacity: 0.8; }
+
+.page-card .title-group {
+  margin: auto 0;
+  text-align: center;
+  width: 100%;
+}
+
+.page-card .title {
+  font-family: 'Iosevka Heavy Oblique', 'Iosevka Curly Hv Ex Obl', 'Inter', sans-serif;
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  letter-spacing: -0.05em;
+}
+
+.page-card .marquee-btn {
+  background: #000;
+  color: #fff;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  font-family: monospace;
+  padding: 0.5em 0;
+  font-size: 0.75rem;
+  margin: 1em 0;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 12s linear infinite;
+}
+
+.page-num { 
+  position: absolute; 
+  bottom: 15px; 
+  left: 20px; 
+  font-size: 0.8rem; 
+}
+
+sup { 
+  font-size: 0.6em; 
+}
+
+.image-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin: 1em 0;
+  align-items: flex-end;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.image-container img {
+  max-width: calc(50% - 5px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  flex: 1;
+  min-width: 0;
+}
+
+figure {
+  margin: 1.5em 0;
+}
+
+figcaption {
+  flex: 1;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1.1;
+  align-self: flex-start;
+}
+
+@media (max-width: 600px) {
+  .page-card {
+    aspect-ratio: auto;
+    min-height: 85vh;
+  }
+
+  .image-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+}

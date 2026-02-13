@@ -1,0 +1,43 @@
+---
+interface Props {
+  pages?: string[];
+}
+
+const defaultPages = [
+  'page_112.jpg', 'page_123.jpg', 'page_145.jpg', 'page_218.jpg',
+  'page_270.jpg', 'page_43.jpg', 'page_23.jpg', 'page_24.jpg',
+  'page_277.jpg', 'page_59.jpg', 'page_84.jpg', 'page_69.jpg',
+  'page_63.jpg', 'page_73.jpg', 'page_79.jpg', 'page_117.jpg',
+  'page_125.jpg', 'page_133.jpg', 'page_166.jpg', 'page_257.jpg',
+  'page_8.jpg', 'page_2.jpg', 'page_18.jpg', 'page_17.jpg',
+];
+
+const pages = Astro.props.pages || defaultPages;
+const repeatedPages = Array(3).fill(pages).flat();
+const rotations = ['rotate(-4deg)', 'rotate(3deg)', 'rotate(5deg)', 'rotate(-2deg)'];
+---
+
+<div class="fixed inset-0 grid grid-cols-auto gap-4 p-4 pointer-events-none overflow-hidden" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); grid-auto-rows: 250px;">
+  {repeatedPages.map((page, i) => (
+    <img
+      src={`/scattered-pages/${page}`}
+      alt={`Journal page ${page}`}
+      class="w-full h-full object-cover border-4 border-white shadow-lg transition-transform duration-500 pointer-events-auto hover:scale-[2.2] hover:rotate-3 hover:z-50"
+      style={{
+        transform: rotations[i % rotations.length],
+      }}
+    />
+  ))}
+</div>
+
+<div class="fixed inset-0 bg-black/40 pointer-events-none"></div>
+
+<style>
+  :global(body) {
+    background-color: #e0e0e0;
+    font-family: "Libertinus Serif", "Linux Libertine", serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+</style>
