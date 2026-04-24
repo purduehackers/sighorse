@@ -1,3 +1,5 @@
 *.blend filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
 *.kra filter=lfs diff=lfs merge=lfs -text
+src/assets/pages/*.jpg filter=lfs diff=lfs merge=lfs -text
+public/dzi/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
