@@ -27,6 +27,12 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Restore DZI cache
+        uses: actions/cache@v4
+        with:
+          path: public/2025-postlaunch/dzi
+          key: dzi-2025-${{ hashFiles('src/assets/2025-postlaunch/pages/**') }}
+
       - name: Install dependencies
         run: npm ci
 

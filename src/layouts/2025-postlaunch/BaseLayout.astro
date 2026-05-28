@@ -1,0 +1,39 @@
+---
+import '@/styles/2025-postlaunch.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "SIGHORSE (the Special Interest Group in Horsing Around) is a 8.7× better journal than all the other journals out there." } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <meta property="og:title" content={title} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://sig.horse/2025-postlaunch/cover.webp" />
+  <meta property="og:image:alt" content="The front, spine, and back cover of the SIGHORSE journal book" />
+  <meta property="og:url" content="https://sig.horse" />
+  <meta property="og:description" content={description} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@purduehackers" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://sig.horse/2025-postlaunch/cover.webp" />
+  <meta name="twitter:image:alt" content="The front, spine, and back cover of the SIGHORSE journal book" />
+
+  <script defer src="https://umami.purduehackers.com/script.js" data-website-id="dca68793-b730-48ed-85ac-6945bfee3484"></script>
+</head>
+<body>
+  <slot />
+</body>
+</html>

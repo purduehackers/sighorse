@@ -1,5 +1,6 @@
 node_modules/
 dist/
+public/2025-postlaunch/dzi/
 .DS_Store
 *.log
 .env
