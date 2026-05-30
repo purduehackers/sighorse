@@ -4,7 +4,7 @@ import { generateDzi } from './src/plugins/2025-postlaunch-dzi.mjs';
 export default defineConfig({
   integrations: [generateDzi()],
   redirects: {
-    '/': '/2025-postlaunch',
+    '/': '/2026-prelaunch',
     '/pages': '/2025-postlaunch/pages',
   },
   vite: {

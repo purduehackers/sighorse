@@ -1,12 +1,370 @@
 ---
+import horseImg from '../../assets/2026-prelaunch/horse.png';
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#f0f0f0">
+  <meta name="description" content="SIGHORSE 2026 — Purdue Hackers">
+  <meta property="og:title" content="SIGHORSE 2026">
+  <meta property="og:description" content="SIGHORSE (the Special Interest Group in Horsing Around) — 2026 edition, by Purdue Hackers.">
   <title>SIGHORSE 2026</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #f0f0f0;
+      touch-action: manipulation;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Prompt screen ── */
+    #prompt-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      background: #f0f0f0;
+    }
+
+    #prompt-text {
+      font-family: 'Courier New', 'Courier', monospace;
+      font-weight: 900;
+      /* clamp: min 3rem, preferred 33vw (gives ~3 lines ≈ 50% height on Pixel 7 Pro), max 8rem */
+      font-size: clamp(3rem, 33vw, 8rem);
+      line-height: 1.05;
+      color: #1a1a1a;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Scene: horse + panels ── */
+    #scene {
+      position: relative;
+      width: min(92vw, 88vh);
+      height: min(92vw, 88vh);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    /* ── Speed streaks ── */
+    #streaks {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .streak {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 2px;
+      border-radius: 1px;
+      opacity: 0;
+      /* transform and width set inline per streak */
+    }
+
+    /* ── Horse ── */
+    #horse {
+      position: relative;
+      z-index: 10;
+      width: min(58vw, 58vh);
+      max-width: 520px;
+      height: auto;
+      display: block;
+      /* initial state managed by GSAP */
+      opacity: 0;
+    }
+
+    /* ── Menu panels ── */
+    .panel {
+      /* Fixed to viewport so panels sit in the clear space around the horse */
+      position: fixed;
+      display: flex;
+      align-items: center;
+      font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.4rem, 4.8vw, 2.6rem);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #111;
+      text-decoration: none;
+      opacity: 0;
+      left: 0;
+      top: 0;
+      /* drop-shadow on parent so it renders AFTER the child's clip-path — making it visible */
+      filter: drop-shadow(20px 20px 0 #000);
+      transition: filter 0.12s ease;
+      /* width set by JS per-panel so inner edge always reaches horse centre */
+      height: auto;
+    }
+
+    .panel:hover {
+      filter: drop-shadow(22px 22px 0 #000) brightness(0.88);
+    }
+
+    .panel:focus-visible {
+      outline: 3px solid #333;
+      outline-offset: 6px;
+    }
+
+    .panel-inner {
+      /* clip-path on child so drop-shadow on parent is not itself clipped */
+      display: block;
+      width: 100%;
+      clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
+      padding: 0.4em 1.6em 0.4em 2.2em;
+      box-sizing: border-box;
+      line-height: 1.1;
+      word-break: break-word;
+      min-height: clamp(56px, 12vw, 80px);
+    }
+
+    /* All panel geometry is set by JS from horse BBox — only z-index and colour here */
+    #panel-title   { z-index: 9; }
+    #panel-about   { z-index: 8; }
+    #panel-2025    { z-index: 7; }
+    #panel-discord { z-index: 6; }
+    #panel-purdue  { z-index: 5; }
+    #panel-title   .panel-inner { background: #9ecfc4; }
+    #panel-about   .panel-inner { background: #c8c8c8; }
+    #panel-2025    .panel-inner { background: #bebebe; }
+    #panel-discord .panel-inner { background: #b8c4e0; }
+    #panel-purdue  .panel-inner { background: #d4c8b0; }
+  </style>
 </head>
 <body>
+
+  <!-- Prompt screen: tap / click anywhere to begin -->
+  <div id="prompt-screen" role="button" tabindex="0" aria-label="Tap to summon the horse">
+    <p id="prompt-text">Tap to<br>summon<br>the horse</p>
+  </div>
+
+  <!-- Scene: speed streaks + horse + menu panels -->
+  <div id="scene" aria-live="polite">
+
+    <div id="streaks"></div>
+
+    <img id="horse" src={horseImg.src} alt="The SIGHORSE 2026 horse" />
+
+    <a href="#" class="panel" id="panel-title">
+      <span class="panel-inner">SIGHORSE 2026</span>
+    </a>
+    <a href="#" class="panel" id="panel-about">
+      <span class="panel-inner">About</span>
+    </a>
+    <a href="/2025-postlaunch" class="panel" id="panel-2025">
+      <span class="panel-inner">Read the 2025 Edition</span>
+    </a>
+    <a href="#" class="panel" id="panel-discord">
+      <span class="panel-inner">Join the Discord</span>
+    </a>
+    <a href="#" class="panel" id="panel-purdue">
+      <span class="panel-inner">Run by Purdue Hackers</span>
+    </a>
+
+  </div>
+
+  <script>
+    import gsap from 'gsap';
+
+    // ── Build speed streaks ──
+    const streaksEl = document.getElementById('streaks')!;
+    const STREAK_COUNT = 12;
+    const STREAK_WIDTHS = [46, 38, 52, 41, 35, 49, 44, 37, 55, 40, 47, 34];
+    for (let i = 0; i < STREAK_COUNT; i++) {
+      const el = document.createElement('div');
+      el.className = 'streak';
+      const angle = i * (360 / STREAK_COUNT);
+      const width = STREAK_WIDTHS[i] ?? 42;
+      el.style.cssText = [
+        `width: ${width}%`,
+        `transform: rotate(${angle}deg)`,
+        `background: linear-gradient(to right, transparent 0%, rgba(20,20,20,0.28) 55%, transparent 100%)`,
+      ].join(';');
+      streaksEl.appendChild(el);
+    }
+
+    // ── Set initial GSAP states ──
+    gsap.set('#horse', {
+      scale: 0.3,
+      opacity: 0,
+      transformOrigin: 'center center',
+    });
+
+    gsap.set('.streak', {
+      scaleX: 0,
+      opacity: 0,
+      transformOrigin: 'left center',
+    });
+
+    const horseEl = document.getElementById('horse')!;
+
+    const PANEL_IDS = ['panel-title', 'panel-about', 'panel-discord', 'panel-2025', 'panel-purdue'];
+    const PANEL_ANGLES_DEG = [-150, 180, 150, -30, 30];
+    // How far each panel's inner edge sits inside the horse silhouette (per-panel, px).
+    // Left panels get a larger inset to compensate for the transparent PNG space on that side.
+    // Order: title(-150°), about(180°), discord(150°), 2025(-30°), purdue(30°)
+    const PANEL_INSETS_PX  = [100, 175, 155, 40, 40];
+    // Minimum gap between panel outer edge and screen edge
+    const SCREEN_MARGIN = 20;
+    // Maximum panel length per panel (px) — order matches PANEL_IDS
+    const MAX_PANEL_LENGTHS = [430, 340, 400, 380, 380];
+
+    function placePanels(animate: boolean) {
+      // getBoundingClientRect() center is stable regardless of GSAP scale transform
+      // (scale keeps element centered; transforms don't affect layout flow).
+      // offsetWidth/Height give CSS layout size (= scale-1 size) — not distorted by transform.
+      const horseRect = horseEl.getBoundingClientRect();
+      const horseCx = horseRect.left + horseRect.width  / 2;
+      const horseCy = horseRect.top  + horseRect.height / 2;
+      const horseRx = horseEl.offsetWidth  / 2;
+      const horseRy = horseEl.offsetHeight / 2;
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+
+      PANEL_IDS.forEach((id, i) => {
+        const panel    = document.getElementById(id)!;
+        const angleDeg = PANEL_ANGLES_DEG[i];
+        const angleRad = angleDeg * Math.PI / 180;
+        const cosA     = Math.cos(angleRad);
+        const sinA     = Math.sin(angleRad);
+
+        // Horse silhouette radius in this direction (ellipse approx)
+        const hr = (horseRx * horseRy) /
+          Math.sqrt((horseRy * cosA) ** 2 + (horseRx * sinA) ** 2);
+
+        // Inner edge: horse silhouette minus per-panel inset
+        const innerDist = hr - PANEL_INSETS_PX[i];
+
+        // Distance from horse centre to screen edge along this ray
+        const txMax = cosA > 0 ? (W - horseCx) / cosA : cosA < 0 ? horseCx / -cosA : Infinity;
+        const tyMax = sinA > 0 ? (H - horseCy) / sinA : sinA < 0 ? horseCy / -sinA : Infinity;
+        const outerDist = Math.min(txMax, tyMax) - SCREEN_MARGIN;
+
+        const panelLength = Math.min(Math.max(outerDist - innerDist, 40), MAX_PANEL_LENGTHS[i]);
+
+        // Panel centre sits midway between its inner and outer edges
+        const panelCenterDist = innerDist + panelLength / 2;
+        const targetX = horseCx + cosA * panelCenterDist;
+        const targetY = horseCy + sinA * panelCenterDist;
+
+        panel.style.width = `${panelLength}px`;
+
+        let rotDeg = angleDeg;
+        if (rotDeg >  90) rotDeg -= 180;
+        if (rotDeg < -90) rotDeg += 180;
+
+        if (animate) {
+          gsap.set(panel, { x: targetX, y: targetY, rotation: rotDeg });
+        } else {
+          gsap.set(panel, {
+            x: horseCx, y: horseCy,
+            xPercent: -50, yPercent: -50,
+            scale: 0, opacity: 0,
+            rotation: rotDeg,
+            transformOrigin: 'center center',
+          });
+        }
+
+        panel.dataset.tx = String(targetX);
+        panel.dataset.ty = String(targetY);
+      });
+    }
+
+    placePanels(false);
+
+    // ── Animation sequence ──
+    let triggered = false;
+
+    function summon() {
+      if (triggered) return;
+      triggered = true;
+
+      const tl = gsap.timeline();
+
+      // 1. Fade out the prompt screen
+      tl.to('#prompt-screen', {
+        opacity: 0,
+        duration: 0.28,
+        ease: 'power2.in',
+      }).set('#prompt-screen', { display: 'none' })
+        .addLabel('start');
+
+      // 2. Horse grows in over 3 seconds — power2.in accelerates like
+      //    perspective foreshortening: slow when distant, fast when close
+      tl.to('#horse', {
+        scale: 1,
+        opacity: 1,
+        duration: 3.0,
+        ease: 'power2.in',
+      }, 'start');
+      tl.addLabel('arrived', 'start+=3.0');
+
+      // 3. Speed streaks flash during the final 0.65s of the horse's approach
+      tl.to('.streak', {
+        scaleX: 1,
+        opacity: 0.6,
+        duration: 0.18,
+        ease: 'power3.out',
+        stagger: { each: 0.012, from: 'random' },
+      }, 'arrived-=0.65')
+        .to('.streak', {
+          scaleX: 0.1,
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.in',
+          stagger: { each: 0.01, from: 'random' },
+        }, '>-0.05');
+
+      // 4. Panels explode outward from horse body in their computed directions.
+      PANEL_IDS.forEach((id, i) => {
+        const panel = document.getElementById(id)!;
+        tl.to(panel, {
+          x: parseFloat(panel.dataset.tx!),
+          y: parseFloat(panel.dataset.ty!),
+          scale: 1,
+          opacity: 1,
+          duration: 0.38,
+          ease: 'back.out(1.5)',
+        }, i === 0 ? 'arrived+=0.08' : '>-0.10');
+      });
+    }
+
+    const promptEl = document.getElementById('prompt-screen')!;
+    promptEl.addEventListener('click', summon);
+    promptEl.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        summon();
+      }
+    });
+
+    new ResizeObserver(() => placePanels(triggered)).observe(document.documentElement);
+  </script>
+
 </body>
 </html>
