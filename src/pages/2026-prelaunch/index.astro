@@ -7,10 +7,10 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#f0f0f0">
-  <meta name="description" content="SIGHORSE 2026 — Purdue Hackers">
-  <meta property="og:title" content="SIGHORSE 2026">
+  <meta name="description" content="SIGHORSE&nbsp;2026 — Purdue Hackers">
+  <meta property="og:title" content="SIGHORSE&nbsp;2026">
   <meta property="og:description" content="SIGHORSE (the Special Interest Group in Horsing Around) — 2026 edition, by Purdue Hackers.">
-  <title>SIGHORSE 2026</title>
+  <title>SIGHORSE&nbsp;2026</title>
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -232,16 +232,16 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
 
     <div id="streaks"></div>
 
-    <img id="horse" src={horseImg.src} alt="The SIGHORSE 2026 horse" />
+    <img id="horse" src={horseImg.src} alt="The SIGHORSE&nbsp;2026 horse" />
 
-    <a href="/2026-prelaunch/about" class="panel" id="panel-title">
-      <span class="panel-inner">Learn about<br>SIGHORSE 2026</span>
+    <a href="https://blog.purduehackers.com/posts/sighorse" class="panel" id="panel-title">
+      <span class="panel-inner">LEARN ABOUT<br><span style="white-space: nowrap;">SIGHORSE&nbsp;2025</span></span>
     </a>
     <a href="/2025-postlaunch/" class="panel" id="panel-2025">
       <span class="panel-inner">Read the 2025 Edition</span>
     </a>
     <a href="https://discord.gg/5paFjKzdPE" class="panel" id="panel-discord">
-      <span class="panel-inner">Join the Discord</span>
+      <span class="panel-inner">JOIN <br><span style="white-space: nowrap;">SIGHORSE<br>2026</span></span>
     </a>
     <a href="https://www.purduehackers.com/" class="panel" id="panel-purdue">
       <span class="panel-inner">Run by Purdue Hackers</span>
@@ -251,17 +251,17 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
 
   <!-- Mobile list layout (shown after summon at narrow/short viewports) -->
   <div id="mobile-scene" aria-live="polite">
-    <a href="/2026-prelaunch/about" class="mobile-panel">
-      <span class="mobile-panel-inner" style="background:#9ecfc4;">Learn about<br>SIGHORSE 2026</span>
+    <a href="https://blog.purduehackers.com/posts/sighorse" class="mobile-panel">
+      <span class="mobile-panel-inner" style="background:#9ecfc4;">LEARN ABOUT<br>SIGHORSE&nbsp;2025</span>
     </a>
     <a href="/2025-postlaunch/" class="mobile-panel">
       <span class="mobile-panel-inner" style="background:#bebebe;">Read the 2025 Edition</span>
     </a>
     <div id="mobile-horse-wrap">
-      <img id="mobile-horse" src={horseImg.src} alt="The SIGHORSE 2026 horse" />
+      <img id="mobile-horse" src={horseImg.src} alt="The SIGHORSE&nbsp;2026 horse" />
     </div>
     <a href="https://discord.gg/5paFjKzdPE" class="mobile-panel">
-      <span class="mobile-panel-inner" style="background:#b8c4e0;">Join the Discord</span>
+      <span class="mobile-panel-inner" style="background:#b8c4e0;">JOIN<br>SIGHORSE<br>2026</span>
     </a>
     <a href="https://www.purduehackers.com/" class="mobile-panel">
       <span class="mobile-panel-inner" style="background:#d4c8b0;">Run by Purdue Hackers</span>
@@ -307,11 +307,11 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
 
     const horseEl = document.getElementById('horse')!;
 
-    const PANEL_IDS = ['panel-title', 'panel-discord', 'panel-2025', 'panel-purdue'];
+    const PANEL_IDS = ['panel-discord', 'panel-title', 'panel-2025', 'panel-purdue'];
     const PANEL_ANGLES_DEG = [-150, 150, -30, 30];
-    const PANEL_INSETS_PX  = [100, 155, 40, 40];
+    const PANEL_INSETS_PX  = [155, 100, 40, 40];
     const SCREEN_MARGIN = 20;
-    const MAX_PANEL_LENGTHS = [430, 400, 380, 380];
+    const MAX_PANEL_LENGTHS = [400, 430, 380, 380];
 
     function placePanels(animate: boolean) {
       const horseRect = horseEl.getBoundingClientRect();
