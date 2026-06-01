@@ -106,6 +106,7 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
       height: auto;
       display: block;
       opacity: 0;
+      pointer-events: none;
     }
 
     /* ── Menu panels ── */
@@ -233,16 +234,16 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
 
     <img id="horse" src={horseImg.src} alt="The SIGHORSE 2026 horse" />
 
-    <a href="#" class="panel" id="panel-title">
+    <a href="/2026-prelaunch/about" class="panel" id="panel-title">
       <span class="panel-inner">Learn about<br>SIGHORSE 2026</span>
     </a>
-    <a href="/2025-postlaunch" class="panel" id="panel-2025">
+    <a href="/2025-postlaunch/" class="panel" id="panel-2025">
       <span class="panel-inner">Read the 2025 Edition</span>
     </a>
-    <a href="#" class="panel" id="panel-discord">
+    <a href="https://discord.gg/5paFjKzdPE" class="panel" id="panel-discord">
       <span class="panel-inner">Join the Discord</span>
     </a>
-    <a href="#" class="panel" id="panel-purdue">
+    <a href="https://www.purduehackers.com/" class="panel" id="panel-purdue">
       <span class="panel-inner">Run by Purdue Hackers</span>
     </a>
 
@@ -250,19 +251,19 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
 
   <!-- Mobile list layout (shown after summon at narrow/short viewports) -->
   <div id="mobile-scene" aria-live="polite">
-    <a href="#" class="mobile-panel">
+    <a href="/2026-prelaunch/about" class="mobile-panel">
       <span class="mobile-panel-inner" style="background:#9ecfc4;">Learn about<br>SIGHORSE 2026</span>
     </a>
-    <a href="/2025-postlaunch" class="mobile-panel">
+    <a href="/2025-postlaunch/" class="mobile-panel">
       <span class="mobile-panel-inner" style="background:#bebebe;">Read the 2025 Edition</span>
     </a>
     <div id="mobile-horse-wrap">
       <img id="mobile-horse" src={horseImg.src} alt="The SIGHORSE 2026 horse" />
     </div>
-    <a href="#" class="mobile-panel">
+    <a href="https://discord.gg/5paFjKzdPE" class="mobile-panel">
       <span class="mobile-panel-inner" style="background:#b8c4e0;">Join the Discord</span>
     </a>
-    <a href="#" class="mobile-panel">
+    <a href="https://www.purduehackers.com/" class="mobile-panel">
       <span class="mobile-panel-inner" style="background:#d4c8b0;">Run by Purdue Hackers</span>
     </a>
   </div>
