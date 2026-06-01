@@ -1,4 +1,4 @@
-import { defineConfig, config } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import { generateDzi } from './src/plugins/2025-postlaunch-dzi.mjs';
 
 export default defineConfig({
@@ -9,15 +9,23 @@ export default defineConfig({
   },
   fonts: [
     {
+      provider: fontProviders.local(),
       name: 'SourceSerif4',
-      src: './src/fonts/SourceSerif4-VariableFont_opsz,wght.ttf',
-      weight: '200 900',
-    },
-    {
-      name: 'SourceSerif4',
-      src: './src/fonts/SourceSerif4-Italic-VariableFont_opsz,wght.ttf',
-      weight: '200 900',
-      style: 'italic',
+      cssVariable: '--font-source-serif-4',
+      options: {
+        variants: [
+          {
+            src: ['./src/fonts/SourceSerif4-VariableFont_opsz,wght.ttf'],
+            weight: '200 900',
+            style: 'normal',
+          },
+          {
+            src: ['./src/fonts/SourceSerif4-Italic-VariableFont_opsz,wght.ttf'],
+            weight: '200 900',
+            style: 'italic',
+          },
+        ],
+      },
     },
   ],
   vite: {

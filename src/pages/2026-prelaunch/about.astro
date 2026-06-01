@@ -10,18 +10,6 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
   <meta name="description" content="What is SIGHORSE? The journal of things done over the summer, by Purdue Hackers.">
   <title>What is SIGHORSE? | SIGHORSE 2026</title>
   <style>
-    @font-face {
-      font-family: "SourceSerif4";
-      src: url('../../fonts/SourceSerif4-VariableFont_opsz,wght.ttf') format('truetype-variations');
-      font-weight: 200 900;
-    }
-    @font-face {
-      font-family: "SourceSerif4";
-      src: url('../../fonts/SourceSerif4-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
-      font-weight: 200 900;
-      font-style: italic;
-    }
-
     html { font-size: 2.4vw; }
     @media all and (min-width:1000px) { html { font-size: 24px; } }
     @media all and (max-width:520px) { html { font-size: 18px; } }
@@ -38,7 +26,7 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
       min-height: 100%;
       position: relative;
       -webkit-font-smoothing: subpixel-antialiased;
-      font-family: SourceSerif4, Georgia, serif;
+      font-family: var(--font-source-serif-4), Georgia, serif;
       line-height: 1.4;
       font-size: 0.98rem;
       color: #333;
@@ -128,7 +116,7 @@ import horseImg from '../../assets/2026-prelaunch/horse.png';
     first-use { font-style: italic; }
 
     aside p {
-      font-family: SourceSerif4;
+      font-family: var(--font-source-serif-4);
       font-size: 0.83rem;
       line-height: 1.4;
       color: #667;
