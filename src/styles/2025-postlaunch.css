@@ -22,30 +22,6 @@ html, body {
   position: relative;
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-.animate-marquee {
-  animation: marquee 12s linear infinite;
-}
-
-.marquee-btn-inverted {
-  background: #fff !important;
-  color: #000 !important;
-  border: 2px solid #000;
-}
-
-.marquee-track-reverse {
-  animation: marquee-reverse 12s linear infinite;
-}
-
 /* Scattered background grid container */
 .scattered-bg {
   position: fixed;
@@ -146,26 +122,54 @@ html, body {
   letter-spacing: -0.05em;
 }
 
-.page-card .marquee-btn {
-  background: #000;
-  color: #fff;
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  font-family: monospace;
-  padding: 0.5em 0;
-  font-size: 0.75rem;
-  margin: 1em 0;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  flex-shrink: 0;
+/* Windows 7-style button links */
+.win-btns {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr; /* equal widths, sized to the widest button */
+  gap: 0.6em;
+  width: fit-content;
+  margin: 1.2em auto;
 }
 
-.marquee-track {
+.page-card .win-btn {
   display: flex;
-  width: max-content;
-  animation: marquee 12s linear infinite;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.35em 0.75em;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  color: #000;
+  text-decoration: none;
+  border: 1px solid #707070;
+  border-radius: 3px;
+  background: linear-gradient(to bottom, rgba(242, 242, 242, 0.7) 0%, rgba(235, 235, 235, 0.7) 50%, rgba(221, 221, 221, 0.7) 50%, rgba(207, 207, 207, 0.7) 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75), 0 1px 2px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.page-card .win-btn:hover {
+  border-color: #3c7fb1;
+  background: linear-gradient(to bottom, rgba(234, 246, 253, 0.7) 0%, rgba(217, 240, 252, 0.7) 50%, rgba(190, 230, 253, 0.7) 50%, rgba(167, 217, 245, 0.7) 100%);
+}
+
+.page-card .win-btn:active {
+  border-color: #2c628b;
+  background: linear-gradient(to bottom, rgba(229, 244, 252, 0.7) 0%, rgba(196, 229, 246, 0.7) 50%, rgba(152, 209, 239, 0.7) 50%, rgba(104, 179, 219, 0.7) 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.page-card .win-btn:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+.win-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 
 .page-num { 
@@ -211,6 +215,10 @@ figcaption {
 }
 
 @media (max-width: 600px) {
+  .win-btns {
+    grid-auto-flow: row;
+  }
+
   .page-card {
     aspect-ratio: auto;
     min-height: 85vh;

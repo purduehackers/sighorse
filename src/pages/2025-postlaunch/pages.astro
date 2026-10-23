@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import '@/styles/2025-postlaunch.css';
+import wraparoundCover from '@/assets/2025-postlaunch/pages/page-001.jpg';
 
 const COLUMNS = 20;
 
@@ -12,7 +14,7 @@ const TOTAL_PAGES = Object.keys(pageModules).length;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Every Page — SIGHORSE 2025</title>
+  <title>SIGHORSE 2025 pages</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -30,7 +32,7 @@ const TOTAL_PAGES = Object.keys(pageModules).length;
       background: #e0e0e0;
     }
 
-    /* Loading overlay — styled like a page-card */
+    /* Loading overlay */
     #loading {
       position: fixed;
       inset: 0;
@@ -50,76 +52,53 @@ const TOTAL_PAGES = Object.keys(pageModules).length;
       pointer-events: none;
     }
 
-    #loading-title {
-      font-family: 'Iosevka Heavy Oblique', 'Iosevka Curly Hv Ex Obl', 'Inter', sans-serif;
-      font-size: clamp(1.4rem, 4vw, 2.2rem);
-      letter-spacing: -0.03em;
-      color: #000;
+    #loading-cover {
+      width: min(480px, 85vw);
+      height: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
+    /* Windows 7-style progress bar */
     #loading-bar-outer {
-      width: min(400px, 80vw);
-      height: 2px;
-      background: rgba(0,0,0,0.15);
+      width: min(480px, 85vw);
+      height: 16px;
+      padding: 1px;
+      border: 1px solid #8e8f8f;
+      border-radius: 3px;
+      background: linear-gradient(to bottom, #dcdcdc, #f3f3f3);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
+      overflow: hidden;
     }
 
     #loading-bar {
+      position: relative;
       height: 100%;
       width: 0%;
-      background: #000;
+      border-radius: 2px;
+      background: linear-gradient(to bottom, #cdf6b8 0%, #7ee05c 45%, #3cc41f 50%, #4fd436 100%);
+      overflow: hidden;
       transition: width 0.1s linear;
     }
 
-    #loading-count {
-      font-family: "Libertinus Serif", serif;
-      font-size: 0.95rem;
-      color: #555;
+    /* the light that sweeps across the filled part */
+    #loading-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 40%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
+      animation: progress-sweep 2s linear infinite;
     }
 
-    /* Nav bar — frosted glass matching page-card texture */
-    #nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.55rem 1.2rem;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(3px);
-      border-bottom: 1px solid rgba(0,0,0,0.18);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-      z-index: 50;
-      font-family: "Libertinus Serif", serif;
-      font-size: 0.9rem;
+    @keyframes progress-sweep {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(250%); }
     }
 
-    #nav-title {
-      font-family: 'Iosevka Heavy Oblique', 'Iosevka Curly Hv Ex Obl', 'Inter', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: -0.03em;
-      color: #000;
-      text-decoration: none;
+    @media (prefers-reduced-motion: reduce) {
+      #loading-bar::after { animation: none; display: none; }
     }
 
-    #nav-title:hover { opacity: 0.7; }
-
-    #nav .sep { color: #aaa; margin: 0 0.1rem; }
-
-    #nav a.plain-link {
-      color: #000;
-      text-decoration: none;
-    }
-
-    #nav a.plain-link:hover { text-decoration: underline; }
-
-    #nav .info {
-      margin-left: auto;
-      color: #666;
-      font-size: 0.8rem;
-      font-style: italic;
-    }
 
     /* Zoom controls */
     .osd-controls {
@@ -132,7 +111,15 @@ const TOTAL_PAGES = Object.keys(pageModules).length;
       z-index: 50;
     }
 
-    .osd-controls button {
+    #btn-back {
+      position: fixed;
+      top: 1.2rem;
+      left: 1.2rem;
+      z-index: 50;
+      text-decoration: none;
+    }
+
+    .osd-controls button, #btn-back {
       width: 36px;
       height: 36px;
       background: rgba(255,255,255,0.82);
@@ -141,40 +128,48 @@ const TOTAL_PAGES = Object.keys(pageModules).length;
       border: 1px solid rgba(0,0,0,0.2);
       box-shadow: 0 2px 6px rgba(0,0,0,0.12);
       cursor: pointer;
-      font-size: 1.1rem;
-      font-family: "Libertinus Serif", serif;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .osd-controls button:hover {
+    .osd-controls button:hover, #btn-back:hover {
       background: rgba(255,255,255,0.97);
+    }
+
+    .osd-controls img, #btn-back img {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* 48px touch targets on touchscreens */
+    @media (pointer: coarse) {
+      .osd-controls button, #btn-back {
+        width: 48px;
+        height: 48px;
+      }
+
+      .osd-controls img, #btn-back img {
+        width: 32px;
+        height: 32px;
+      }
     }
   </style>
 </head>
 <body>
   <div id="loading">
-    <div id="loading-title">SIGHORSE 2025</div>
+    <Image id="loading-cover" src={wraparoundCover} width={600} quality={50} loading="eager" alt="SIGHORSE 2025 cover" />
     <div id="loading-bar-outer"><div id="loading-bar"></div></div>
-    <div id="loading-count">Loading…</div>
-  </div>
-
-  <div id="nav">
-    <a id="nav-title" href="/2025-postlaunch">SIGHORSE 2025</a>
-    <span class="sep">|</span>
-    <a href="/2025-postlaunch" class="plain-link">← back</a>
-    <span class="sep">|</span>
-    <a href="/2025-postlaunch/book.pdf" class="plain-link">PDF</a>
-    <span class="info">308 pages · 20 per row · scroll to zoom · drag to pan</span>
   </div>
 
   <div id="viewer" data-columns={COLUMNS} data-total={TOTAL_PAGES}></div>
 
+  <a id="btn-back" href="/" title="Back" aria-label="Back to SIGHORSE 2025"><img src="/2025-postlaunch/tango/edit-undo.svg" alt="" /></a>
+
   <div class="osd-controls">
-    <button id="btn-zoom-in" title="Zoom in">+</button>
-    <button id="btn-home" title="Reset view">⌂</button>
-    <button id="btn-zoom-out" title="Zoom out">−</button>
+    <button id="btn-zoom-in" title="Zoom in" aria-label="Zoom in"><img src="/2025-postlaunch/tango/list-add.svg" alt="" /></button>
+    <button id="btn-home" title="Fit to screen" aria-label="Fit to screen"><img src="/2025-postlaunch/tango/view-fullscreen.svg" alt="" /></button>
+    <button id="btn-zoom-out" title="Zoom out" aria-label="Zoom out"><img src="/2025-postlaunch/tango/list-remove.svg" alt="" /></button>
   </div>
 
   <script is:inline src="https://cdn.jsdelivr.net/npm/openseadragon@4.1/build/openseadragon/openseadragon.min.js"></script>
@@ -206,14 +201,12 @@ const TOTAL_PAGES = Object.keys(pageModules).length;
 
     var loadingEl = document.getElementById('loading');
     var barEl = document.getElementById('loading-bar');
-    var countEl = document.getElementById('loading-count');
     var loaded = 0;
 
     function onLoad() {
       loaded++;
       var pct = Math.round((loaded / TOTAL) * 100);
       barEl.style.width = pct + '%';
-      countEl.textContent = loaded + ' / ' + TOTAL + ' pages';
       if (loaded === TOTAL) {
         setTimeout(function() {
           loadingEl.classList.add('fade-out');

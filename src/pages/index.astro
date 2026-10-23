@@ -110,19 +110,66 @@ const allScatters = [...scatterSet1, ...scatterSet2, ...scatterSet3, ...scatterS
 
       <div class="title-group">
         <div class="title">SIGHORSE 2025 🦓</div>
-        <a href="/2025-postlaunch/book.pdf" class="marquee-btn">
-          <div class="marquee-track">
-            <span>READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) |&nbsp;</span>
-            <span>READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) | READ THE JOURNAL (PDF) |&nbsp;</span>
-          </div>
-        </a>
+        <div class="win-btns">
+          <a href="/2025-postlaunch/pages" class="win-btn">
+            <svg class="win-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <defs>
+                <linearGradient id="thumb-page" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ffffff" />
+                  <stop offset="1" stop-color="#d6d6d6" />
+                </linearGradient>
+                <radialGradient id="lens" cx="0.35" cy="0.3" r="0.8">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.95" />
+                  <stop offset="0.5" stop-color="#bfe3fa" stop-opacity="0.7" />
+                  <stop offset="1" stop-color="#5aa7dc" stop-opacity="0.8" />
+                </radialGradient>
+                <linearGradient id="handle" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#5a5a5a" />
+                  <stop offset="1" stop-color="#1a1a1a" />
+                </linearGradient>
+              </defs>
+              <g stroke="#6b6b6b" fill="url(#thumb-page)">
+                <rect x="1.5" y="1.5" width="8" height="11" />
+                <rect x="11.5" y="1.5" width="8" height="11" />
+                <rect x="21.5" y="1.5" width="8" height="11" />
+                <rect x="1.5" y="15.5" width="8" height="11" />
+                <rect x="11.5" y="15.5" width="8" height="11" />
+              </g>
+              <g fill="#e2574c">
+                <rect x="3" y="3" width="5" height="3" />
+                <rect x="13" y="9" width="5" height="2" fill="#6aa84f" />
+                <rect x="23" y="3" width="5" height="4" fill="#4a86c8" />
+                <rect x="3" y="22" width="5" height="3" fill="#e6a23c" />
+              </g>
+              <path d="M26 26l4.5 4.5" stroke="url(#handle)" stroke-width="3.5" stroke-linecap="round" />
+              <circle cx="21.5" cy="21.5" r="6" fill="url(#lens)" stroke="#3d3d3d" stroke-width="1.6" />
+              <path d="M18.3 19.6a3.6 3.6 0 0 1 2.8-2.4" stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round" />
+            </svg>
+            <span>View the journal</span>
+          </a>
 
-        <a href="/2025-postlaunch/pages" class="marquee-btn marquee-btn-inverted">
-          <div class="marquee-track marquee-track-reverse">
-            <span>SEE ALL THE PAGES AT ONCE | SEE ALL THE PAGES AT ONCE | SEE ALL THE PAGES AT ONCE |&nbsp;</span>
-            <span>SEE ALL THE PAGES AT ONCE | SEE ALL THE PAGES AT ONCE | SEE ALL THE PAGES AT ONCE |&nbsp;</span>
-          </div>
-        </a>
+          <a href="/2025-postlaunch/book.pdf" class="win-btn" download>
+            <svg class="win-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <defs>
+                <linearGradient id="pdf-page" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ffffff" />
+                  <stop offset="1" stop-color="#dcdcdc" />
+                </linearGradient>
+                <linearGradient id="pdf-band" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#f0574f" />
+                  <stop offset="0.5" stop-color="#d4251c" />
+                  <stop offset="1" stop-color="#a50f08" />
+                </linearGradient>
+              </defs>
+              <path d="M6.5 1.5h13l7 7v22h-20z" fill="url(#pdf-page)" stroke="#6b6b6b" />
+              <path d="M19.5 1.5v7h7" fill="#f4f4f4" stroke="#6b6b6b" stroke-linejoin="round" />
+              <path d="M10 7h7M10 10h13M10 13h13" stroke="#b5b5b5" />
+              <rect x="2.5" y="16.5" width="21" height="10" rx="1.5" fill="url(#pdf-band)" stroke="#7d0b06" />
+              <text x="13" y="24.4" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="7.5" fill="#fff">PDF</text>
+            </svg>
+            <span>Download the journal</span>
+          </a>
+        </div>
 
         <br />
         <div>many authors</div>
@@ -159,7 +206,7 @@ const allScatters = [...scatterSet1, ...scatterSet2, ...scatterSet3, ...scatterS
     <!-- Paper Copy Page -->
     <section class="page-card">
       <div class="title-group" style="margin-bottom: 1.5em;">
-        <div class="title">BUY A PAPER COPY</div>
+        <div class="title">THERE WERE PAPER COPIES</div>
       </div>
       <div style="flex: 1; overflow-y: auto;">
         <div>
@@ -180,20 +227,12 @@ const allScatters = [...scatterSet1, ...scatterSet2, ...scatterSet3, ...scatterS
                 <strong>Is the print edition different from the online edition?</strong><br />
                 No. The print edition is identical to the online PDF.
               </li>
-              <li style="margin-bottom: 0.8em;">
-                <strong>When will I be able to get the books?</strong><br />
-                Around the first week of February.
-              </li>
-              <li style="margin-bottom: 0.8em;">
-                <strong>How will I receive the book?</strong><br />
-                Come to any <a href="https://events.purduehackers.com/" style="color: #0066cc;">Hack Night</a>. You can request shipping (provided you pay) in your donation message or <a href="mailto:phackers@purdue.edu" style="color: #0066cc;">by emailing us</a>, and we can figure it out from there.
-              </li>
             </ul>
           </div>
 
           <div style="margin-top: 1.5em; font-size: 0.95rem; overflow-wrap: break-word;">
             To register interest in a future printing run, <a href="mailto:phackers@purdue.edu?subject=Please print SIGHORSE again" style="color: #0066cc; word-break: break-all;">email us</a>. <br /><br />
-            <strong>If you enjoyed this work, <a href="https://phack.rs/donate-hcb" data-umami-event="donate-link-click" style="color: #0066cc;">please donate to Purdue Hackers so we can run this again!</a></strong> <br />
+            <strong><a href="https://purduehackers.com" style="color: #0066cc;">Check out what Purdue Hackers is up to these days!!</a></strong> <br />
           </div>
 
           <div class="image-container" style="margin-top: 1.5em;">
